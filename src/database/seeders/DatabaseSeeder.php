@@ -14,5 +14,21 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
+        
+        // ユーザーデータを最初にシード
+        $this->call([
+            UsersTableSeeder::class,
+        ]);
+        
+        // マスターデータをシード
+        $this->call([
+            ConditionsTableSeeder::class,
+            CategoriesTableSeeder::class,
+        ]);
+        
+        // 商品データをシード（ユーザー、コンディション、カテゴリーに依存）
+        $this->call([
+            ProductTableSeeder::class,
+        ]);
     }
 }

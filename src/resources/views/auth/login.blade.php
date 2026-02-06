@@ -16,19 +16,8 @@
     <main class="auth-login">
         <div class="auth-login-container">
             <h1 class="auth-login-title">ログイン</h1>
-            <form method="POST" action="{{ route('login') }}" class="auth-login-form">
+            <form method="POST" action="{{ route('login') }}" class="auth-login-form" novalidate>
                 @csrf
-
-                @if ($errors->any())
-                <div class="auth-login-errors">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-                @endif
-
                 <div class="auth-login-field">
                     <label for="email" class="auth-login-label">メールアドレス</label>
                     <input type="email" id="email" name="email" value="{{ old('email') }}" class="auth-login-input @error('email') is-invalid @enderror">

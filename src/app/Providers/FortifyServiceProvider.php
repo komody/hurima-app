@@ -6,13 +6,14 @@ use App\Actions\Fortify\CreateNewUser;
 use App\Actions\Fortify\ResetUserPassword;
 use App\Actions\Fortify\UpdateUserPassword;
 use App\Actions\Fortify\UpdateUserProfileInformation;
-use Illuminate\Auth\Notifications\VerifyEmail;
+use App\Http\Requests\LoginRequest;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Laravel\Fortify\Fortify;
+use App\Notifications\VerifyEmail;
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -85,6 +86,20 @@ class FortifyServiceProvider extends ServiceProvider
 
         // ログイン失敗時の処理
         Fortify::authenticateUsing(function (Request $request) {
+            // LoginRequestを使ってバリデーション
+            $loginRequest = new LoginRequest();
+            $validator = \Illuminate\Support\Facades\Validator::make(
+                $request->all(),
+                $loginRequest->rules(),
+                $loginRequest->messages()
+            );
+
+            if ($validator->fails()) {
+                // バリデーションエラーをセッションに保存してリダイレクト
+                throw \Illuminate\Validation\ValidationException::withMessages($validator->errors()->toArray());
+            }
+
+            // バリデーション通過後、認証処理
             $user = \App\Models\User::where('email', $request->email)->first();
 
             if ($user && \Illuminate\Support\Facades\Hash::check($request->password, $user->password)) {

@@ -1,0 +1,17 @@
+{
+    "/js/app.js": "/js/app.js",
+    "/css/auth/login.css": "/css/auth/login.css",
+    "/css/products/index.css": "/css/products/index.css",
+    "/css/items/show.css": "/css/items/show.css",
+    "/css/items/index.css": "/css/items/index.css",
+    "/css/app.css": "/css/app.css",
+    "/css/welcome.css": "/css/welcome.css",
+    "/css/layouts/header.css": "/css/layouts/header.css",
+    "/css/mypage/profile/edit.css": "/css/mypage/profile/edit.css",
+    "/css/mypage/index.css": "/css/mypage/index.css",
+    "/css/sell/create.css": "/css/sell/create.css",
+    "/css/purchase/address/edit.css": "/css/purchase/address/edit.css",
+    "/css/purchase/show.css": "/css/purchase/show.css",
+    "/css/auth/verify-email.css": "/css/auth/verify-email.css",
+    "/css/auth/register.css": "/css/auth/register.css"
+}

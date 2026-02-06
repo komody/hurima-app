@@ -1,0 +1,111 @@
+// ログイン画面のスタイル
+
+.auth-login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 80px);
+  padding: 2rem 1rem;
+
+  &-container {
+    width: 100%;
+    max-width: 400px;
+  }
+
+  &-title {
+    text-align: center;
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: #000;
+    margin: 0 0 2rem 0;
+  }
+
+  &-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  &-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  &-label {
+    font-size: 1rem;
+    font-weight: 400;
+    color: #000;
+  }
+
+  &-input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-family: inherit;
+
+    &:focus {
+      outline: none;
+      border-color: #3b82f6;
+    }
+
+    &.is-invalid {
+      border-color: #c33;
+    }
+  }
+
+  &-submit-btn {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #ef4444;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background-color: #dc2626;
+    }
+  }
+
+  &-register-link {
+    text-align: center;
+  }
+
+  &-register-link-text {
+    color: #3b82f6;
+    text-decoration: none;
+    font-size: 0.875rem;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &-errors {
+    background-color: #fee;
+    border: 1px solid #fcc;
+    border-radius: 4px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    color: #c33;
+
+    ul {
+      margin: 0;
+      padding-left: 1.5rem;
+    }
+  }
+
+  &-error {
+    color: #c33;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    display: block;
+  }
+}

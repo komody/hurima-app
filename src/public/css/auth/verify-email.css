@@ -1,0 +1,64 @@
+.auth-verify-email {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 80px);
+  padding: 2rem 1rem;
+  background-color: #f5f5f5;
+}
+.auth-verify-email-container {
+  width: 100%;
+  max-width: 600px;
+  background-color: #fff;
+  padding: 3rem 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+.auth-verify-email-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #000;
+  margin: 0 0 2rem 0;
+}
+.auth-verify-email-content {
+  margin-bottom: 2rem;
+}
+.auth-verify-email-text {
+  font-size: 1rem;
+  color: #000;
+  line-height: 1.6;
+  margin: 0 0 1rem 0;
+}
+.auth-verify-email-text:last-child {
+  margin-bottom: 0;
+}
+.auth-verify-email-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+}
+.auth-verify-email-button {
+  width: 100%;
+  max-width: 300px;
+  padding: 0.75rem 1.5rem;
+  background-color: #e5e7eb;
+  color: #000;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 400;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.auth-verify-email-button:hover {
+  background-color: #d1d5db;
+}
+.auth-verify-email-resend-link {
+  color: #3b82f6;
+  text-decoration: none;
+  font-size: 0.875rem;
+}
+.auth-verify-email-resend-link:hover {
+  text-decoration: underline;
+}

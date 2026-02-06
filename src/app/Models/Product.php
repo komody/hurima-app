@@ -33,27 +33,36 @@ class Product extends Model
         'comments_count' => 'integer',
     ];
 
-    /**
-     * コンディションとのリレーション
-     */
     public function condition()
     {
         return $this->belongsTo(Condition::class, 'condition_id');
     }
 
-    /**
-     * 売り手とのリレーション
-     */
     public function seller()
     {
         return $this->belongsTo(User::class, 'seller_id');
     }
 
-    /**
-     * 買い手とのリレーション
-     */
     public function buyer()
     {
         return $this->belongsTo(User::class, 'buyer_id');
+    }
+
+    public function likes()
+    {
+        return $this->hasMany(Like::class, 'product_id');
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'product_id');
+    }
+
+    /**
+     * カテゴリーとのリレーション（多対多）
+     */
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class, 'table_product_categories', 'product_id', 'category_id');
     }
 }

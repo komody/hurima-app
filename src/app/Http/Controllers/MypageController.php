@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -26,6 +27,13 @@ class MypageController extends Controller
 
     public function updateProfile(Request $request)
     {
+        /** @var User|null $user */
+        $user = Auth::user();
+
+        if (!$user) {
+            return redirect()->route('login')->with('error', 'ログインが必要です');
+        }
+
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'postal_code' => 'required|string|max:255',
@@ -33,8 +41,6 @@ class MypageController extends Controller
             'building' => 'nullable|string|max:255',
             'profile_image' => 'nullable|image|max:2048',
         ]);
-
-        $user = Auth::user();
 
         // プロフィール画像のアップロード処理
         if ($request->hasFile('profile_image')) {
@@ -48,7 +54,8 @@ class MypageController extends Controller
             $validated['profile_image'] = $path;
         }
 
-        $user->update($validated);
+        $user->fill($validated);
+        $user->save();
 
         return redirect()->route('items.index')->with('success', 'プロフィールを更新しました');
     }

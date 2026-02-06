@@ -12,6 +12,11 @@
 
     .header-title {
       margin: 0;
+      
+      a {
+        display: block;
+        text-decoration: none;
+      }
     }
 
     .header-search {
@@ -46,6 +51,11 @@
         font-weight: 400;
 
         .nav-login-link{
+          color: #fff;
+          text-decoration: none;
+        }
+
+        .nav-register-link {
           color: #fff;
           text-decoration: none;
         }

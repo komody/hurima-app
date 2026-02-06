@@ -1,11 +1,20 @@
 @php
-$headerType = $headerType ?? 'not-login'; // デフォルト値
+// ログイン状態に応じて自動的にheaderTypeを設定
+if (!isset($headerType)) {
+    if (auth()->check()) {
+        $headerType = 'login';
+    } else {
+        $headerType = 'not-login';
+    }
+}
 @endphp
 
 <header class="header">
   <div class="header-wrapper">
     <h1 class="header-title">
-      <img src="{{ asset('storage/layouts/title.svg') }}" alt="#">
+      <a href="{{ route('items.index') }}">
+        <img src="{{ asset('storage/layouts/title.svg') }}" alt="#">
+      </a>
     </h1>
     @if($headerType === 'login-page')
     {{-- ログイン画面 --}}
@@ -20,6 +29,9 @@ $headerType = $headerType ?? 'not-login'; // デフォルト値
       {{-- ログイン済み --}}
       <ul class="header-nav-list">
         <li class="header-nav-item">
+          <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            @csrf
+          </form>
           <a href="#" class="nav-logout-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">ログアウト</a>
         </li>
         <li class="header-nav-item">

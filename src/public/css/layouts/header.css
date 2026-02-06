@@ -13,6 +13,10 @@
 .header .header-wrapper .header-title {
   margin: 0;
 }
+.header .header-wrapper .header-title a {
+  display: block;
+  text-decoration: none;
+}
 .header .header-wrapper .header-search {
   width: 500px;
   height: 50px;
@@ -42,6 +46,10 @@
   font-weight: 400;
 }
 .header .header-wrapper .header-nav .header-nav-item .nav-login-link {
+  color: #fff;
+  text-decoration: none;
+}
+.header .header-wrapper .header-nav .header-nav-item .nav-register-link {
   color: #fff;
   text-decoration: none;
 }

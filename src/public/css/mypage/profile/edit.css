@@ -92,6 +92,9 @@
   outline: none;
   border-color: #3b82f6;
 }
+.profile-edit-input.is-invalid {
+  border-color: #c33;
+}
 .profile-edit-submit-btn {
   width: 100%;
   max-width: 400px;
@@ -108,4 +111,30 @@
 }
 .profile-edit-submit-btn:hover {
   background-color: #dc2626;
+}
+.profile-edit-errors {
+  background-color: #fee;
+  border: 1px solid #fcc;
+  border-radius: 4px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  color: #c33;
+}
+.profile-edit-errors ul {
+  margin: 0;
+  padding-left: 1.5rem;
+}
+.profile-edit-message {
+  background-color: #d1fae5;
+  border: 1px solid #86efac;
+  border-radius: 4px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  color: #065f46;
+}
+.profile-edit-error {
+  color: #c33;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  display: block;
 }

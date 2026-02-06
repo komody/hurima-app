@@ -6,6 +6,7 @@ use App\Actions\Fortify\CreateNewUser;
 use App\Actions\Fortify\ResetUserPassword;
 use App\Actions\Fortify\UpdateUserPassword;
 use App\Actions\Fortify\UpdateUserProfileInformation;
+use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
@@ -65,9 +66,10 @@ class FortifyServiceProvider extends ServiceProvider
 
                     // 初回ログイン時のメール認証未完了の場合
                     if (is_null($user->first_login_email_verified_at)) {
-                        // 初回ログイン時のメール認証を送信
-                        $user->sendEmailVerificationNotification();
-                        return redirect()->route('verification.notice')->with('first_login', true);
+                        // 初回ログイン時のメール認証を送信（強制的に送信）
+                        $user->notify(new VerifyEmail);
+                        session()->put('first_login', true);
+                        return redirect()->route('verification.notice');
                     }
 
                     // プロフィール未完了の場合
@@ -76,7 +78,7 @@ class FortifyServiceProvider extends ServiceProvider
                     }
 
                     // 通常のログイン成功時
-                    return redirect()->intended(route('items.index'));
+                    return redirect()->route('items.index');
                 }
             };
         });

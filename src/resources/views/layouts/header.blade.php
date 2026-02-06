@@ -1,12 +1,12 @@
 @php
 // ログイン状態に応じて自動的にheaderTypeを設定
-if (!isset($headerType)) {
+  if (!isset($headerType)) {
     if (auth()->check()) {
-        $headerType = 'login';
+    $headerType = 'login';
     } else {
-        $headerType = 'not-login';
+    $headerType = 'not-login';
     }
-}
+  }
 @endphp
 
 <header class="header">
@@ -55,7 +55,7 @@ if (!isset($headerType)) {
         </li>
       </ul>
       @else
-        {{-- ログイン画面（ナビゲーションなし） --}}
+      {{-- ログイン画面（ナビゲーションなし） --}}
       @endif
     </nav>
   </div>

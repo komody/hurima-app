@@ -16,19 +16,8 @@
     <main class="auth-register">
         <div class="auth-register-container">
             <h1 class="auth-register-title">会員登録</h1>
-            <form method="POST" action="{{ route('register') }}" class="auth-register-form">
+            <form method="POST" action="{{ route('register') }}" class="auth-register-form" novalidate>
                 @csrf
-
-                @if ($errors->any())
-                <div class="auth-register-errors">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-                @endif
-
                 <div class="auth-register-field">
                     <label for="name" class="auth-register-label">ユーザー名</label>
                     <input type="text" id="name" name="name" value="{{ old('name') }}" class="auth-register-input @error('name') is-invalid @enderror">

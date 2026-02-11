@@ -70,10 +70,38 @@
   align-items: center;
   gap: 0.5rem;
 }
+.items-show-like-form {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+}
+.items-show-like-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: opacity 0.2s;
+  outline: none;
+  box-shadow: none;
+}
+.items-show-like-btn:hover {
+  opacity: 0.7;
+}
+.items-show-like-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  outline: none;
+}
 .items-show-stat-icon {
   width: 1.5rem;
   height: 1.5rem;
   display: block;
+  outline: none;
+  border: none;
+  filter: none;
 }
 .items-show-stat-count {
   font-size: 1rem;

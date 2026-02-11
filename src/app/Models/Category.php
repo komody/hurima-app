@@ -9,7 +9,7 @@ class Category extends Model
 {
     use HasFactory;
 
-    protected $table = 'table_categories';
+    protected $table = 'categories';
 
     protected $fillable = [
         'name',
@@ -20,6 +20,6 @@ class Category extends Model
      */
     public function products()
     {
-        return $this->belongsToMany(Product::class, 'table_product_categories', 'category_id', 'product_id');
+        return $this->belongsToMany(Product::class, 'category_product', 'category_id', 'product_id');
     }
 }

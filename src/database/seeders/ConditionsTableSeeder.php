@@ -22,7 +22,7 @@ class ConditionsTableSeeder extends Seeder
         ];
 
         foreach ($conditions as $condition) {
-            DB::table('table_conditions')->insert([
+            DB::table('conditions')->insert([
                 'name' => $condition,
                 'created_at' => now(),
                 'updated_at' => now(),

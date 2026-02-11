@@ -31,7 +31,7 @@ class ItemController extends Controller
 
         // いいね数を集計
         $likesCount = $product->likes()->count();
-        
+
         // ログインユーザーがいいね済みか判定
         $isLiked = false;
         if (Auth::check()) {

@@ -9,7 +9,7 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $table = 'table_products';
+    protected $table = 'products';
 
     protected $fillable = [
         'name',
@@ -20,17 +20,12 @@ class Product extends Model
         'condition_id',
         'seller_id',
         'buyer_id',
-        'delivery_address',
-        'likes_count',
-        'comments_count',
         'sold_out',
     ];
 
     protected $casts = [
         'sold_out' => 'boolean',
         'price' => 'integer',
-        'likes_count' => 'integer',
-        'comments_count' => 'integer',
     ];
 
     public function condition()
@@ -63,6 +58,6 @@ class Product extends Model
      */
     public function categories()
     {
-        return $this->belongsToMany(Category::class, 'table_product_categories', 'product_id', 'category_id');
+        return $this->belongsToMany(Category::class, 'category_product', 'product_id', 'category_id');
     }
 }

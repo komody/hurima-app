@@ -15,7 +15,7 @@ class ProductTableSeeder extends Seeder
     public function run()
     {
         // コンディション名からIDを取得するためのマッピング
-        $conditions = DB::table('table_conditions')->pluck('id', 'name')->toArray();
+        $conditions = DB::table('conditions')->pluck('id', 'name')->toArray();
 
         // ユーザーIDを取得（最初のユーザーを使用、存在しない場合は1をデフォルトとする）
         $sellerId = DB::table('users')->value('id') ?? 1;
@@ -28,7 +28,6 @@ class ProductTableSeeder extends Seeder
                 'description' => 'スタイリッシュなデザインのメンズ腕時計',
                 'image_url' => '/storage/products/dummy1.jpg',
                 'condition' => '良好',
-                'delivery_address' => '東京都',
             ],
             [
                 'name' => 'HDD',
@@ -37,7 +36,6 @@ class ProductTableSeeder extends Seeder
                 'description' => '高速で信頼性の高いハードディスク',
                 'image_url' => '/storage/products/dummy2.jpg',
                 'condition' => '目立った傷や汚れなし',
-                'delivery_address' => '東京都',
             ],
             [
                 'name' => '玉ねぎ3束',
@@ -46,7 +44,6 @@ class ProductTableSeeder extends Seeder
                 'description' => '新鮮な玉ねぎ3束のセット',
                 'image_url' => '/storage/products/dummy3.jpg',
                 'condition' => 'やや傷や汚れあり',
-                'delivery_address' => '東京都',
             ],
             [
                 'name' => '革靴',
@@ -55,7 +52,6 @@ class ProductTableSeeder extends Seeder
                 'description' => 'クラシックなデザインの革靴',
                 'image_url' => '/storage/products/dummy4.jpg',
                 'condition' => '状態が悪い',
-                'delivery_address' => '東京都',
             ],
             [
                 'name' => 'ノートPC',
@@ -64,7 +60,6 @@ class ProductTableSeeder extends Seeder
                 'description' => '高性能なノートパソコン',
                 'image_url' => '/storage/products/dummy5.jpg',
                 'condition' => '良好',
-                'delivery_address' => '東京都',
             ],
             [
                 'name' => 'マイク',
@@ -73,7 +68,6 @@ class ProductTableSeeder extends Seeder
                 'description' => '高音質のレコーディング用マイク',
                 'image_url' => '/storage/products/dummy6.jpg',
                 'condition' => '目立った傷や汚れなし',
-                'delivery_address' => '東京都',
             ],
             [
                 'name' => 'ショルダーバッグ',
@@ -82,7 +76,6 @@ class ProductTableSeeder extends Seeder
                 'description' => 'おしゃれなショルダーバッグ',
                 'image_url' => '/storage/products/dummy7.jpg',
                 'condition' => 'やや傷や汚れあり',
-                'delivery_address' => '東京都',
             ],
             [
                 'name' => 'タンブラー',
@@ -91,7 +84,6 @@ class ProductTableSeeder extends Seeder
                 'description' => '使いやすいタンブラー',
                 'image_url' => '/storage/products/dummy8.jpg',
                 'condition' => '状態が悪い',
-                'delivery_address' => '東京都',
             ],
             [
                 'name' => 'コーヒーミル',
@@ -100,7 +92,6 @@ class ProductTableSeeder extends Seeder
                 'description' => '手動のコーヒーミル',
                 'image_url' => '/storage/products/dummy9.jpg',
                 'condition' => '良好',
-                'delivery_address' => '東京都',
             ],
             [
                 'name' => 'メイクセット',
@@ -109,7 +100,6 @@ class ProductTableSeeder extends Seeder
                 'description' => '便利なメイクアップセット',
                 'image_url' => '/storage/products/dummy10.jpg',
                 'condition' => '目立った傷や汚れなし',
-                'delivery_address' => '東京都',
             ],
         ];
 
@@ -136,7 +126,7 @@ class ProductTableSeeder extends Seeder
                 $conditionId = reset($conditions);
             }
 
-            DB::table('table_products')->insert([
+            DB::table('products')->insert([
                 'name' => $product['name'],
                 'price' => $product['price'],
                 'brand_name' => $product['brand_name'],
@@ -145,9 +135,6 @@ class ProductTableSeeder extends Seeder
                 'condition_id' => $conditionId,
                 'seller_id' => $sellerId,
                 'buyer_id' => null,
-                'delivery_address' => $product['delivery_address'],
-                'likes_count' => 0,
-                'comments_count' => 0,
                 'sold_out' => false,
                 'created_at' => now(),
                 'updated_at' => now(),

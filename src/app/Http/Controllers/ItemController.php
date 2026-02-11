@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use Illuminate\Support\Facades\Auth;
 
 class ItemController extends Controller
 {
@@ -28,6 +29,17 @@ class ItemController extends Controller
         $product = Product::with(['condition', 'categories', 'comments.user'])
             ->findOrFail($item_id);
 
-        return view('items.show', compact('product'));
+        // いいね数を集計
+        $likesCount = $product->likes()->count();
+        
+        // ログインユーザーがいいね済みか判定
+        $isLiked = false;
+        if (Auth::check()) {
+            $isLiked = $product->likes()
+                ->where('user_id', Auth::id())
+                ->exists();
+        }
+
+        return view('items.show', compact('product', 'likesCount', 'isLiked'));
     }
 }

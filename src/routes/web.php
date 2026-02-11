@@ -8,6 +8,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SellController;
 use App\Http\Controllers\MypageController;
+use App\Http\Controllers\LikeController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use App\Notifications\VerifyEmail;
@@ -34,14 +35,19 @@ Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 
 // ログアウト
 Route::post('/logout', function (Request $request) {
-    Auth::logout();
-    $request->session()->invalidate();
-    $request->session()->regenerateToken();
-    return redirect()->route('items.index');
+  Auth::logout();
+  $request->session()->invalidate();
+  $request->session()->regenerateToken();
+  return redirect()->route('items.index');
 })->middleware('auth')->name('logout');
 
 // 商品詳細画面
 Route::get('/item/{item_id}', [ItemController::class, 'show'])->name('items.show');
+
+// いいね機能（認証必須）
+Route::post('/item/{item_id}/like', [LikeController::class, 'toggle'])
+  ->middleware('auth')
+  ->name('items.like.toggle');
 
 // 商品一覧ページ（既存のルート）
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
@@ -76,7 +82,7 @@ Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $requ
 // 認証メール再送
 Route::post('/email/verification-notification', function (Request $request) {
   $user = $request->user();
-  
+
   // 初回ログイン時のメール認証の場合
   if (is_null($user->first_login_email_verified_at) && session('first_login')) {
     // 初回ログイン時のメール認証を送信（強制的に送信）
@@ -85,7 +91,7 @@ Route::post('/email/verification-notification', function (Request $request) {
     // 会員登録時のメール認証を送信
     $user->sendEmailVerificationNotification();
   }
-  
+
   return back()->with('message', '認証メールを送信しました');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 

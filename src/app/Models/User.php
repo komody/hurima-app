@@ -58,4 +58,12 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         $this->notify(new VerifyEmailNotification);
     }
+
+    /**
+     * いいねとのリレーション
+     */
+    public function likes()
+    {
+        return $this->hasMany(Like::class, 'user_id');
+    }
 }

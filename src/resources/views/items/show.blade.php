@@ -37,10 +37,23 @@
 
                     <div class="items-show-stats">
                         <div class="items-show-stat">
-                            <img src="{{ asset('storage/layouts/likes_icon.svg') }}"
-                                alt="いいね"
-                                class="items-show-stat-icon">
-                            <span class="items-show-stat-count">{{ $product->likes_count }}</span>
+                            @auth
+                            <form method="POST" action="{{ route('items.like.toggle', ['item_id' => $product->id]) }}" class="items-show-like-form">
+                                @csrf
+                                <button type="submit" class="items-show-like-btn">
+                                    <img src="{{ asset('storage/layouts/' . ($isLiked ? 'liked_icon.svg' : 'likes_icon.svg')) }}"
+                                        alt="いいね"
+                                        class="items-show-stat-icon">
+                                </button>
+                            </form>
+                            @else
+                            <a href="{{ route('login') }}" class="items-show-like-link">
+                                <img src="{{ asset('storage/layouts/likes_icon.svg') }}"
+                                    alt="いいね"
+                                    class="items-show-stat-icon">
+                            </a>
+                            @endauth
+                            <span class="items-show-stat-count">{{ $likesCount }}</span>
                         </div>
                         <div class="items-show-stat">
                             <img src="{{ asset('storage/layouts/comments_icon.svg') }}"

@@ -72,7 +72,7 @@ Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $requ
   }
 
   // プロフィール未完了の場合はプロフィール設定画面へ
-  if (is_null($user->postal_code) || is_null($user->address)) {
+  if (!$user->account || empty($user->account->postal_code) || empty($user->account->address)) {
     return redirect()->route('mypage.profile.edit');
   }
 

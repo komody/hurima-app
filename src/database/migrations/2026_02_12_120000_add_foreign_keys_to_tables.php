@@ -13,14 +13,14 @@ class AddForeignKeysToTables extends Migration
    */
   public function up()
   {
-    Schema::table('products', function (Blueprint $table) {
-      if (!Schema::hasColumn('products', 'seller_id')) {
+    Schema::table('items', function (Blueprint $table) {
+      if (!Schema::hasColumn('items', 'seller_id')) {
         $table->unsignedBigInteger('seller_id')->after('id');
       }
-      if (!Schema::hasColumn('products', 'buyer_id')) {
+      if (!Schema::hasColumn('items', 'buyer_id')) {
         $table->unsignedBigInteger('buyer_id')->nullable()->after('seller_id');
       }
-      if (!Schema::hasColumn('products', 'condition_id')) {
+      if (!Schema::hasColumn('items', 'condition_id')) {
         $table->unsignedBigInteger('condition_id')->after('buyer_id');
       }
 
@@ -44,8 +44,8 @@ class AddForeignKeysToTables extends Migration
       if (!Schema::hasColumn('likes', 'user_id')) {
         $table->unsignedBigInteger('user_id')->after('id');
       }
-      if (!Schema::hasColumn('likes', 'product_id')) {
-        $table->unsignedBigInteger('product_id')->after('user_id');
+      if (!Schema::hasColumn('likes', 'item_id')) {
+        $table->unsignedBigInteger('item_id')->after('user_id');
       }
 
       $table->foreign('user_id')
@@ -53,9 +53,9 @@ class AddForeignKeysToTables extends Migration
         ->on('users')
         ->onDelete('cascade');
 
-      $table->foreign('product_id')
+      $table->foreign('item_id')
         ->references('id')
-        ->on('products')
+        ->on('items')
         ->onDelete('cascade');
     });
 
@@ -63,8 +63,8 @@ class AddForeignKeysToTables extends Migration
       if (!Schema::hasColumn('comments', 'user_id')) {
         $table->unsignedBigInteger('user_id')->after('id');
       }
-      if (!Schema::hasColumn('comments', 'product_id')) {
-        $table->unsignedBigInteger('product_id')->after('user_id');
+      if (!Schema::hasColumn('comments', 'item_id')) {
+        $table->unsignedBigInteger('item_id')->after('user_id');
       }
 
       $table->foreign('user_id')
@@ -72,23 +72,23 @@ class AddForeignKeysToTables extends Migration
         ->on('users')
         ->onDelete('cascade');
 
-      $table->foreign('product_id')
+      $table->foreign('item_id')
         ->references('id')
-        ->on('products')
+        ->on('items')
         ->onDelete('cascade');
     });
 
-    Schema::table('category_product', function (Blueprint $table) {
-      if (!Schema::hasColumn('category_product', 'product_id')) {
-        $table->unsignedBigInteger('product_id')->after('id');
+    Schema::table('category_item', function (Blueprint $table) {
+      if (!Schema::hasColumn('category_item', 'item_id')) {
+        $table->unsignedBigInteger('item_id')->after('id');
       }
-      if (!Schema::hasColumn('category_product', 'category_id')) {
-        $table->unsignedBigInteger('category_id')->after('product_id');
+      if (!Schema::hasColumn('category_item', 'category_id')) {
+        $table->unsignedBigInteger('category_id')->after('item_id');
       }
 
-      $table->foreign('product_id')
+      $table->foreign('item_id')
         ->references('id')
-        ->on('products')
+        ->on('items')
         ->onDelete('cascade');
 
       $table->foreign('category_id')
@@ -112,8 +112,8 @@ class AddForeignKeysToTables extends Migration
       if (!Schema::hasColumn('orders', 'user_id')) {
         $table->unsignedBigInteger('user_id')->after('id');
       }
-      if (!Schema::hasColumn('orders', 'product_id')) {
-        $table->unsignedBigInteger('product_id')->after('user_id');
+      if (!Schema::hasColumn('orders', 'item_id')) {
+        $table->unsignedBigInteger('item_id')->after('user_id');
       }
 
       $table->foreign('user_id')
@@ -121,9 +121,9 @@ class AddForeignKeysToTables extends Migration
         ->on('users')
         ->onDelete('cascade');
 
-      $table->foreign('product_id')
+      $table->foreign('item_id')
         ->references('id')
-        ->on('products')
+        ->on('items')
         ->onDelete('cascade');
     });
   }
@@ -137,8 +137,8 @@ class AddForeignKeysToTables extends Migration
   {
     Schema::table('orders', function (Blueprint $table) {
       $table->dropForeign(['user_id']);
-      $table->dropForeign(['product_id']);
-      $table->dropColumn(['user_id', 'product_id']);
+      $table->dropForeign(['item_id']);
+      $table->dropColumn(['user_id', 'item_id']);
     });
 
     Schema::table('accounts', function (Blueprint $table) {
@@ -146,25 +146,25 @@ class AddForeignKeysToTables extends Migration
       $table->dropColumn(['user_id']);
     });
 
-    Schema::table('category_product', function (Blueprint $table) {
-      $table->dropForeign(['product_id']);
+    Schema::table('category_item', function (Blueprint $table) {
+      $table->dropForeign(['item_id']);
       $table->dropForeign(['category_id']);
-      $table->dropColumn(['product_id', 'category_id']);
+      $table->dropColumn(['item_id', 'category_id']);
     });
 
     Schema::table('comments', function (Blueprint $table) {
       $table->dropForeign(['user_id']);
-      $table->dropForeign(['product_id']);
-      $table->dropColumn(['user_id', 'product_id']);
+      $table->dropForeign(['item_id']);
+      $table->dropColumn(['user_id', 'item_id']);
     });
 
     Schema::table('likes', function (Blueprint $table) {
       $table->dropForeign(['user_id']);
-      $table->dropForeign(['product_id']);
-      $table->dropColumn(['user_id', 'product_id']);
+      $table->dropForeign(['item_id']);
+      $table->dropColumn(['user_id', 'item_id']);
     });
 
-    Schema::table('products', function (Blueprint $table) {
+    Schema::table('items', function (Blueprint $table) {
       $table->dropForeign(['seller_id']);
       $table->dropForeign(['buyer_id']);
       $table->dropForeign(['condition_id']);

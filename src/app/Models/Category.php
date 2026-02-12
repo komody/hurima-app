@@ -18,8 +18,8 @@ class Category extends Model
     /**
      * 商品とのリレーション（多対多）
      */
-    public function products()
+    public function items()
     {
-        return $this->belongsToMany(Product::class, 'category_product', 'category_id', 'product_id');
+        return $this->belongsToMany(Item::class, 'category_item', 'category_id', 'item_id');
     }
 }

@@ -28,7 +28,7 @@ class DatabaseSeeder extends Seeder
         
         // 商品データをシード（ユーザー、コンディション、カテゴリーに依存）
         $this->call([
-            ProductTableSeeder::class,
+            ItemTableSeeder::class,
         ]);
     }
 }

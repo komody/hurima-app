@@ -17,8 +17,8 @@ class CreateAccountsTable extends Migration
             $table->id();
             $table->string('name', 255);
             $table->string('profile_image', 255)->nullable();
-            $table->string('postal_code', 255);
-            $table->string('address', 255);
+            $table->string('postal_code', 255)->nullable();
+            $table->string('address', 255)->nullable();
             $table->string('building', 255)->nullable();
             $table->timestamps();
         });

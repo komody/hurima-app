@@ -18,8 +18,8 @@ class Condition extends Model
     /**
      * 商品とのリレーション
      */
-    public function products()
+    public function items()
     {
-        return $this->hasMany(Product::class, 'condition_id');
+        return $this->hasMany(Item::class, 'condition_id');
     }
 }

@@ -42,11 +42,27 @@ class MypageController extends Controller
             'profile_image' => 'nullable|image|max:2048',
         ]);
 
+        // ユーザー名を更新
+        $user->update(['name' => $validated['name']]);
+
+        // Account がなければ作成、あれば更新
+        $account = $user->account;
+
+        if (!$account) {
+            $account = $user->account()->create([
+                'name' => $validated['name'],
+                'postal_code' => $validated['postal_code'],
+                'address' => $validated['address'],
+                'building' => $validated['building'],
+                'profile_image' => null,
+            ]);
+        }
+
         // プロフィール画像のアップロード処理
         if ($request->hasFile('profile_image')) {
             // 古い画像を削除
-            if ($user->profile_image) {
-                Storage::disk('public')->delete($user->profile_image);
+            if ($account->profile_image) {
+                Storage::disk('public')->delete($account->profile_image);
             }
 
             // 新しい画像を保存
@@ -54,8 +70,14 @@ class MypageController extends Controller
             $validated['profile_image'] = $path;
         }
 
-        $user->fill($validated);
-        $user->save();
+        $account->fill([
+            'name' => $validated['name'],
+            'postal_code' => $validated['postal_code'],
+            'address' => $validated['address'],
+            'building' => $validated['building'],
+            'profile_image' => $validated['profile_image'] ?? $account->profile_image,
+        ]);
+        $account->save();
 
         return redirect()->route('items.index')->with('success', 'プロフィールを更新しました');
     }

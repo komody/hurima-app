@@ -20,8 +20,8 @@
                     @php
                     $noImageUrl = asset('storage/layouts/no_image.png');
                     @endphp
-                    <img src="{{ $product->image_url }}"
-                        alt="{{ $product->name }}"
+                    <img src="{{ $item->image_url }}"
+                        alt="{{ $item->name }}"
                         class="items-show-image"
                         onerror="this.src='{{ $noImageUrl }}'">
                 </div>
@@ -29,16 +29,16 @@
 
             <div class="items-show-details-section">
                 <div class="items-show-header">
-                    <h1 class="items-show-product-name">{{ $product->name }}</h1>
-                    @if($product->brand_name)
-                    <p class="items-show-brand-name">{{ $product->brand_name }}</p>
+                    <h1 class="items-show-product-name">{{ $item->name }}</h1>
+                    @if($item->brand_name)
+                    <p class="items-show-brand-name">{{ $item->brand_name }}</p>
                     @endif
-                    <p class="items-show-price">¥{{ number_format($product->price) }} (税込)</p>
+                    <p class="items-show-price">¥{{ number_format($item->price) }} (税込)</p>
 
                     <div class="items-show-stats">
                         <div class="items-show-stat">
                             @auth
-                            <form method="POST" action="{{ route('items.like.toggle', ['item_id' => $product->id]) }}" class="items-show-like-form">
+                            <form method="POST" action="{{ route('items.like.toggle', ['item_id' => $item->id]) }}" class="items-show-like-form">
                                 @csrf
                                 <button type="submit" class="items-show-like-btn">
                                     <img src="{{ asset('storage/layouts/' . ($isLiked ? 'liked_icon.svg' : 'likes_icon.svg')) }}"
@@ -59,11 +59,11 @@
                             <img src="{{ asset('storage/layouts/comments_icon.svg') }}"
                                 alt="コメント"
                                 class="items-show-stat-icon">
-                            <span class="items-show-stat-count">{{ $product->comments_count }}</span>
+                            <span class="items-show-stat-count">{{ $item->comments_count }}</span>
                         </div>
                     </div>
 
-                    <a href="{{ route('purchase.show', ['item_id' => $product->id]) }}" class="items-show-purchase-btn">
+                    <a href="{{ route('purchase.show', ['item_id' => $item->id]) }}" class="items-show-purchase-btn">
                         購入手続きへ
                     </a>
                 </div>
@@ -71,10 +71,10 @@
                 <div class="items-show-description-section">
                     <h2 class="items-show-section-title">商品説明</h2>
                     <div class="items-show-description-content">
-                        @if($product->condition)
-                        <p>商品の状態: {{ $product->condition->name }}</p>
+                        @if($item->condition)
+                        <p>商品の状態: {{ $item->condition->name }}</p>
                         @endif
-                        <p>{{ $product->description }}</p>
+                        <p>{{ $item->description }}</p>
                         <p>購入後、即発送いたします。</p>
                     </div>
                 </div>
@@ -82,31 +82,31 @@
                 <div class="items-show-info-section">
                     <h2 class="items-show-section-title">商品の情報</h2>
                     <div class="items-show-info-content">
-                        @if($product->categories->count() > 0)
+                        @if($item->categories->count() > 0)
                         <div class="items-show-info-item">
                             <span class="items-show-info-label">カテゴリー</span>
                             <div class="items-show-categories">
-                                @foreach($product->categories as $category)
+                                @foreach($item->categories as $category)
                                 <span class="items-show-category-tag">{{ $category->name }}</span>
                                 @endforeach
                             </div>
                         </div>
                         @endif
 
-                        @if($product->condition)
+                        @if($item->condition)
                         <div class="items-show-info-item">
                             <span class="items-show-info-label">商品の状態</span>
-                            <span class="items-show-info-value">{{ $product->condition->name }}</span>
+                            <span class="items-show-info-value">{{ $item->condition->name }}</span>
                         </div>
                         @endif
                     </div>
                 </div>
 
                 <div class="items-show-comments-section">
-                    <h2 class="items-show-section-title">コメント({{ $product->comments_count }})</h2>
+                    <h2 class="items-show-section-title">コメント({{ $item->comments_count }})</h2>
 
                     <div class="items-show-comments-list">
-                        @forelse($product->comments as $comment)
+                        @forelse($item->comments as $comment)
                         <div class="items-show-comment">
                             <div class="items-show-comment-header">
                                 <div class="items-show-comment-avatar"></div>

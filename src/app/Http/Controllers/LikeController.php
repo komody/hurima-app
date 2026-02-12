@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Product;
+use App\Models\Item;
 use App\Models\Like;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,8 +20,8 @@ class LikeController extends Controller
         }
 
         // 商品の存在確認
-        $product = Product::find($item_id);
-        if (!$product) {
+        $item = Item::find($item_id);
+        if (!$item) {
             return redirect()->route('items.index')
                 ->with('error', '商品が見つかりませんでした。');
         }
@@ -30,7 +30,7 @@ class LikeController extends Controller
         
         // 既にいいね済みか確認
         $existingLike = Like::where('user_id', $userId)
-            ->where('product_id', $item_id)
+            ->where('item_id', $item_id)
             ->first();
 
         if ($existingLike) {
@@ -40,7 +40,7 @@ class LikeController extends Controller
             // いいね追加
             Like::create([
                 'user_id' => $userId,
-                'product_id' => $item_id,
+                'item_id' => $item_id,
             ]);
         }
 

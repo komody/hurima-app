@@ -110,7 +110,7 @@
                         <div class="items-show-comment">
                             <div class="items-show-comment-header">
                                 <div class="items-show-comment-avatar"></div>
-                                <span class="items-show-comment-username">{{ $comment->user->name ?? 'admin' }}</span>
+                                <span class="items-show-comment-username">{{ $comment->user?->name ?? '退会ユーザー' }}</span>
                             </div>
                             <div class="items-show-comment-content">
                                 {{ $comment->content }}
@@ -123,11 +123,14 @@
 
                     <div class="items-show-comment-form-section">
                         <h3 class="items-show-comment-form-title">商品へのコメント</h3>
-                        <form class="items-show-comment-form" method="POST" action="#">
+                        <form class="items-show-comment-form" method="POST" action="{{ route('items.comment.store', ['item_id' => $item->id]) }}">
                             @csrf
+                            @error('content')
+                            <p class="items-show-comment-error">{{ $message }}</p>
+                            @enderror
                             <textarea name="content"
                                 class="items-show-comment-textarea"
-                                placeholder="コメントを入力してください"></textarea>
+                                placeholder="コメントを入力してください">{{ old('content') }}</textarea>
                             <button type="submit" class="items-show-comment-submit-btn">
                                 コメントを送信する
                             </button>

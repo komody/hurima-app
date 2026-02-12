@@ -7,20 +7,20 @@ use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model
 {
-    protected $table = 'table_comments';
+    protected $table = 'comments';
 
     protected $fillable = [
       'content',
       'user_id',
-      'product_id',
+      'item_id',
     ];
 
     public function user()
     {
       return $this->belongsTo(User::class, 'user_id');
     }
-    public function product()
+    public function item()
     {
-      return $this->belongsTo(Product::class, 'product_id');
+      return $this->belongsTo(Item::class, 'item_id');
     }
 }

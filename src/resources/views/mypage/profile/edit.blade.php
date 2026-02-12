@@ -39,8 +39,8 @@
 
                 <div class="profile-edit-image-section">
                     <div class="profile-edit-image-wrapper">
-                        @if(auth()->user()->profile_image)
-                        <img src="{{ asset('storage/' . auth()->user()->profile_image) }}" alt="プロフィール画像" class="profile-edit-image">
+                        @if(auth()->user()->account?->profile_image)
+                        <img src="{{ asset('storage/' . auth()->user()->account->profile_image) }}" alt="プロフィール画像" class="profile-edit-image">
                         @else
                         <div class="profile-edit-image-placeholder"></div>
                         @endif
@@ -59,7 +59,7 @@
 
                 <div class="profile-edit-field">
                     <label for="postal_code" class="profile-edit-label">郵便番号</label>
-                    <input type="text" id="postal_code" name="postal_code" value="{{ old('postal_code', auth()->user()->postal_code) }}" class="profile-edit-input @error('postal_code') is-invalid @enderror">
+                    <input type="text" id="postal_code" name="postal_code" value="{{ old('postal_code', auth()->user()->account?->postal_code) }}" class="profile-edit-input @error('postal_code') is-invalid @enderror">
                     @error('postal_code')
                     <span class="profile-edit-error">{{ $message }}</span>
                     @enderror
@@ -67,7 +67,7 @@
 
                 <div class="profile-edit-field">
                     <label for="address" class="profile-edit-label">住所</label>
-                    <input type="text" id="address" name="address" value="{{ old('address', auth()->user()->address) }}" class="profile-edit-input @error('address') is-invalid @enderror">
+                    <input type="text" id="address" name="address" value="{{ old('address', auth()->user()->account?->address) }}" class="profile-edit-input @error('address') is-invalid @enderror">
                     @error('address')
                     <span class="profile-edit-error">{{ $message }}</span>
                     @enderror
@@ -75,7 +75,7 @@
 
                 <div class="profile-edit-field">
                     <label for="building" class="profile-edit-label">建物名</label>
-                    <input type="text" id="building" name="building" value="{{ old('building', auth()->user()->building) }}" class="profile-edit-input @error('building') is-invalid @enderror">
+                    <input type="text" id="building" name="building" value="{{ old('building', auth()->user()->account?->building) }}" class="profile-edit-input @error('building') is-invalid @enderror">
                     @error('building')
                     <span class="profile-edit-error">{{ $message }}</span>
                     @enderror
@@ -87,13 +87,11 @@
     </main>
 
     <script>
-        // 画像選択ボタンの処理
         document.querySelector('.profile-edit-image-button').addEventListener('click', function(e) {
             e.preventDefault();
             document.getElementById('profile_image').click();
         });
 
-        // 画像プレビュー
         document.getElementById('profile_image').addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (file) {

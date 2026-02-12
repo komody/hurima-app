@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Product;
+use App\Models\Item;
 
 class ProductController extends Controller
 {
@@ -12,11 +12,12 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::with('condition')
+        $items = Item::with('condition')
+            ->withCount(['comments', 'likes'])
             ->where('sold_out', false)
             ->orderBy('created_at', 'desc')
             ->get();
 
-        return view('products.index', compact('products'));
+        return view('products.index', compact('items'));
     }
 }

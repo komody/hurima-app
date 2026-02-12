@@ -6,17 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Like extends Model
 {
-    protected $table = 'table_likes';
+    protected $table = 'likes';
 
     protected $fillable = [
     'user_id',
-    'product_id',
+    'item_id',
     ];
 
     public function user() {
     return $this->belongsTo(User::class, 'user_id');
     }
-    public function product() {
-    return $this->belongsTo(Product::class, 'product_id');
+    public function item() {
+    return $this->belongsTo(Item::class, 'item_id');
     }
 }

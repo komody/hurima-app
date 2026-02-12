@@ -9,7 +9,7 @@ class Category extends Model
 {
     use HasFactory;
 
-    protected $table = 'table_categories';
+    protected $table = 'categories';
 
     protected $fillable = [
         'name',
@@ -18,8 +18,8 @@ class Category extends Model
     /**
      * 商品とのリレーション（多対多）
      */
-    public function products()
+    public function items()
     {
-        return $this->belongsToMany(Product::class, 'table_product_categories', 'category_id', 'product_id');
+        return $this->belongsToMany(Item::class, 'category_item', 'category_id', 'item_id');
     }
 }

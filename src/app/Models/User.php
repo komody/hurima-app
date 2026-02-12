@@ -22,10 +22,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'password',
-        'profile_image',
-        'postal_code',
-        'address',
-        'building',
         'email_verified_at',
         'first_login_email_verified_at',
     ];
@@ -57,6 +53,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function sendEmailVerificationNotification()
     {
         $this->notify(new VerifyEmailNotification);
+    }
+
+    public function account()
+    {
+        return $this->hasOne(Account::class);
     }
 
     /**

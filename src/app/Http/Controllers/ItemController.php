@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Product;
+use App\Models\Item;
 use Illuminate\Support\Facades\Auth;
 
 class ItemController extends Controller
@@ -13,12 +13,12 @@ class ItemController extends Controller
      */
     public function index(Request $request)
     {
-        $products = Product::with('condition')
+        $items = Item::with('condition')
             ->where('sold_out', false)
             ->orderBy('created_at', 'desc')
             ->get();
 
-        return view('items.index', compact('products'));
+        return view('items.index', compact('items'));
     }
 
     /**
@@ -26,20 +26,21 @@ class ItemController extends Controller
      */
     public function show($item_id)
     {
-        $product = Product::with(['condition', 'categories', 'comments.user'])
+        $item = Item::with(['condition', 'categories', 'comments.user'])
+            ->withCount(['comments', 'likes'])
             ->findOrFail($item_id);
 
         // いいね数を集計
-        $likesCount = $product->likes()->count();
-        
+        $likesCount = $item->likes()->count();
+
         // ログインユーザーがいいね済みか判定
         $isLiked = false;
         if (Auth::check()) {
-            $isLiked = $product->likes()
+            $isLiked = $item->likes()
                 ->where('user_id', Auth::id())
                 ->exists();
         }
 
-        return view('items.show', compact('product', 'likesCount', 'isLiked'));
+        return view('items.show', compact('item', 'likesCount', 'isLiked'));
     }
 }

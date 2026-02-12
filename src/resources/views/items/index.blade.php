@@ -30,14 +30,14 @@
             $noImageUrl = asset('storage/layouts/no_image.png');
             @endphp
             <div class="items-index-product-grid">
-                @forelse($products as $product)
-                <a href="{{ route('items.show', ['item_id' => $product->id]) }}" class="items-index-product-card">
+                @forelse($items as $item)
+                <a href="{{ route('items.show', ['item_id' => $item->id]) }}" class="items-index-product-card">
                     <div class="items-index-product-image">
-                        <img src="{{ $product->image_url }}"
-                            alt="{{ $product->name }}"
+                        <img src="{{ $item->image_url }}"
+                            alt="{{ $item->name }}"
                             onerror="this.src='{{ $noImageUrl }}'">
                     </div>
-                    <p class="items-index-product-name">{{ $product->name }}</p>
+                    <p class="items-index-product-name">{{ $item->name }}</p>
                 </a>
                 @empty
                 <p>商品が見つかりませんでした。</p>

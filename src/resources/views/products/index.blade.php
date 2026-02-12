@@ -44,12 +44,12 @@
         <!-- 商品グリッド -->
         <div class="products-index__product-grid">
             <!-- 商品カード -->
-            @forelse($products as $product)
+            @forelse($items as $item)
             <div class="products-index__product-card">
                 <!-- 商品画像 -->
                 <div class="products-index__product-image-wrapper">
-                    <img src="{{ $product->image_url }}"
-                        alt="{{ $product->name }}"
+                    <img src="{{ $item->image_url }}"
+                        alt="{{ $item->name }}"
                         class="products-index__product-image"
                         onerror="this.src='https://via.placeholder.com/300x300?text=No+Image'">
                     <div class="products-index__product-like-button">
@@ -59,7 +59,7 @@
                             </svg>
                         </button>
                     </div>
-                    @if($product->sold_out)
+                    @if($item->sold_out)
                     <div class="products-index__sold-out-badge">
                         <span class="products-index__sold-out-text">売り切れ</span>
                     </div>
@@ -69,32 +69,32 @@
                 <!-- 商品情報 -->
                 <div class="products-index__product-info">
                     <h3 class="products-index__product-name">
-                        {{ $product->name }}
+                        {{ $item->name }}
                     </h3>
-                    @if($product->brand_name)
-                    <p class="products-index__product-brand">{{ $product->brand_name }}</p>
+                    @if($item->brand_name)
+                    <p class="products-index__product-brand">{{ $item->brand_name }}</p>
                     @endif
                     <div class="products-index__product-price-wrapper">
-                        <span class="products-index__product-price">¥{{ number_format($product->price) }}</span>
+                        <span class="products-index__product-price">¥{{ number_format($item->price) }}</span>
                     </div>
                     <div class="products-index__product-stats">
                         <span class="products-index__product-stat">
                             <svg class="products-index__stat-icon" fill="currentColor" viewBox="0 0 20 20">
                                 <path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"></path>
                             </svg>
-                            {{ $product->likes_count }}
+                            {{ $item->likes_count }}
                         </span>
                         <span class="products-index__product-stat">
                             <svg class="products-index__stat-icon" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z" clip-rule="evenodd"></path>
                             </svg>
-                            {{ $product->comments_count }}
+                            {{ $item->comments_count }}
                         </span>
                     </div>
-                    @if($product->condition)
-                    <p class="products-index__product-condition">状態: {{ $product->condition->name }}</p>
+                    @if($item->condition)
+                    <p class="products-index__product-condition">状態: {{ $item->condition->name }}</p>
                     @endif
-                    <p class="products-index__product-delivery">配送先: {{ $product->delivery_address }}</p>
+                    <p class="products-index__product-delivery">配送先: {{ $item->delivery_address }}</p>
                 </div>
             </div>
             @empty

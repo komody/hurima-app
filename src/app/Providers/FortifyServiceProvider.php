@@ -74,7 +74,7 @@ class FortifyServiceProvider extends ServiceProvider
                     }
 
                     // プロフィール未完了の場合
-                    if (is_null($user->postal_code) || is_null($user->address)) {
+                    if (!$user->account || empty($user->account->postal_code) || empty($user->account->address)) {
                         return redirect()->route('mypage.profile.edit');
                     }
 

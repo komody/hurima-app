@@ -11,6 +11,7 @@ use App\Http\Controllers\MypageController;
 use App\Http\Controllers\LikeController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
+use App\Http\Controllers\CommentController;
 use App\Notifications\VerifyEmail;
 
 /*
@@ -43,6 +44,11 @@ Route::post('/logout', function (Request $request) {
 
 // 商品詳細画面
 Route::get('/item/{item_id}', [ItemController::class, 'show'])->name('items.show');
+
+// コメント投稿（認証必須）
+Route::post('/item/{item_id}/comment', [CommentController::class, 'store'])
+  ->middleware('auth')
+  ->name('items.comment.store');
 
 // いいね機能（認証必須）
 Route::post('/item/{item_id}/like', [LikeController::class, 'toggle'])

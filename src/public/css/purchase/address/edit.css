@@ -1,1 +1,106 @@
+.purchase-address-edit {
+  min-height: calc(100vh - 80px);
+  padding: 2rem 1rem;
+  background-color: #f5f5f5;
+}
 
+.purchase-address-edit-title {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #000;
+  margin: 0 0 2rem 0;
+}
+
+.purchase-address-edit-container {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: #fff;
+  padding: 3rem 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.purchase-address-edit-heading {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #000;
+  margin: 0 0 2rem 0;
+}
+
+.purchase-address-edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.purchase-address-edit-errors {
+  background-color: #fee;
+  border: 1px solid #fcc;
+  border-radius: 4px;
+  padding: 1rem;
+  color: #c33;
+}
+
+.purchase-address-edit-errors ul {
+  margin: 0;
+  padding-left: 1.5rem;
+}
+
+.purchase-address-edit-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.purchase-address-edit-label {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #000;
+}
+
+.purchase-address-edit-input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #000;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-family: inherit;
+  background-color: #fff;
+}
+
+.purchase-address-edit-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+}
+
+.purchase-address-edit-input.is-invalid {
+  border-color: #c33;
+}
+
+.purchase-address-edit-error {
+  color: #c33;
+  font-size: 0.875rem;
+  display: block;
+}
+
+.purchase-address-edit-submit-btn {
+  width: 100%;
+  max-width: 400px;
+  margin: 1rem auto 0;
+  padding: 0.875rem 1.5rem;
+  background-color: #ef4444;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.purchase-address-edit-submit-btn:hover {
+  background-color: #dc2626;
+}

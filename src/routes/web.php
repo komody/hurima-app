@@ -106,6 +106,7 @@ Route::middleware(['auth', 'profile.completed'])->group(function () {
   Route::get('/sell', [SellController::class, 'create'])->name('sell.create');
   Route::get('/purchase/{item_id}', [PurchaseController::class, 'show'])->name('purchase.show');
   Route::get('/purchase/address/{item_id}', [PurchaseController::class, 'editAddress'])->name('purchase.address.edit');
+  Route::put('/purchase/address/{item_id}', [PurchaseController::class, 'updateAddress'])->name('purchase.address.update');
   Route::get('/mypage', [MypageController::class, 'index'])->name('mypage.index');
   // ... その他の認証が必要なルート
 });

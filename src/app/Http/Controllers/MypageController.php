@@ -11,10 +11,25 @@ class MypageController extends Controller
 {
     /**
      * プロフィール画面を表示
+     * - /mypage?page=buy: 購入した商品一覧
+     * - /mypage?page=sell: 出品した商品一覧
      */
     public function index(Request $request)
     {
-        return view('mypage.index');
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+
+        $page = $request->query('page') === 'buy' ? 'buy' : 'sell';
+
+        $soldItems = $user->soldItems()->orderByDesc('created_at')->get();
+        $purchasedItems = $user->purchasedItems()->orderByDesc('created_at')->get();
+
+        return view('mypage.index', [
+            'user' => $user,
+            'soldItems' => $soldItems,
+            'purchasedItems' => $purchasedItems,
+            'page' => $page,
+        ]);
     }
 
     /**

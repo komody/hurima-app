@@ -67,4 +67,20 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Like::class, 'user_id');
     }
+
+    /**
+     * 出品した商品とのリレーション（売却済み含む）
+     */
+    public function soldItems()
+    {
+        return $this->hasMany(Item::class, 'seller_id');
+    }
+
+    /**
+     * 購入した商品とのリレーション
+     */
+    public function purchasedItems()
+    {
+        return $this->hasMany(Item::class, 'buyer_id');
+    }
 }

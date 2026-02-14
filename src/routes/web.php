@@ -104,6 +104,7 @@ Route::post('/email/verification-notification', function (Request $request) {
 // プロフィール設定画面以外の認証が必要なルートに適用
 Route::middleware(['auth', 'profile.completed'])->group(function () {
   Route::get('/sell', [SellController::class, 'create'])->name('sell.create');
+  Route::post('/sell', [SellController::class, 'store'])->name('sell.store');
   Route::get('/purchase/{item_id}', [PurchaseController::class, 'show'])->name('purchase.show');
   Route::get('/purchase/address/{item_id}', [PurchaseController::class, 'editAddress'])->name('purchase.address.edit');
   Route::put('/purchase/address/{item_id}', [PurchaseController::class, 'updateAddress'])->name('purchase.address.update');

@@ -1,1 +1,185 @@
-// 商品出品画面のスタイル
+.sell-create {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 20px 80px;
+}
+
+.sell-create-title {
+  font-size: 32px;
+  font-weight: 700;
+  text-align: center;
+  margin: 0 0 40px;
+}
+
+.sell-create-form {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.sell-create-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sell-create-image-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0 0 8px;
+}
+
+.sell-create-section-title {
+  font-size: 30px;
+  font-weight: 700;
+  color: #5f5f5f;
+  border-bottom: 1px solid #5f5f5f;
+  margin: 0 0 8px;
+}
+
+.sell-create-field {
+  display: flex;
+  font-size: 24px;
+  font-weight: 700;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sell-create-label {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.sell-create-image-area {
+  border: 1px dashed #5f5f5f;
+  border-radius: 8px;
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sell-create-image-input {
+  display: none;
+}
+
+.sell-create-image-label {
+  cursor: pointer;
+  display: block;
+  padding: 20px;
+}
+
+.sell-create-image-button {
+  display: inline-block;
+  padding: 12px 24px;
+  border: 2px solid #ff5655;
+  color: #ff5655;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 700;
+
+  &:hover {
+    opacity: 0.9;
+  }
+}
+
+.sell-create-categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.sell-create-category-tag {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+
+  input {
+    display: none;
+  }
+
+  input:checked + .sell-create-category-text {
+    background: #ff5655;
+    color: #fff;
+  }
+}
+
+.sell-create-category-text {
+  display: inline-block;
+  padding: 8px 16px;
+  border: 2px solid #ff5655;
+  border-radius: 24px;
+  color: #ff5655;
+  background: #fff;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.sell-create-select {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #fff;
+  background-image: url('/storage/layouts/pulldown_icon.svg');
+  background-size: 20px;
+  background-position: right 16px center;
+  background-repeat: no-repeat;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.sell-create-input,
+.sell-create-textarea {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.sell-create-textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.sell-create-price-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sell-create-price-prefix {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.sell-create-price-input {
+  flex: 1;
+}
+
+.sell-create-error {
+  color: #ea352d;
+  font-size: 14px;
+  margin: 0;
+}
+
+.sell-create-submit-btn {
+  width: 100%;
+  margin: 20px auto 0;
+  padding: 16px 32px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #fff;
+  background: #ff5655;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+
+  &:hover {
+    opacity: 0.9;
+  }
+}

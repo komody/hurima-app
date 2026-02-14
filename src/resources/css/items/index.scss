@@ -1,78 +1,91 @@
 // 商品一覧画面のスタイル
 
 .items-index {
-  padding: 2rem 0;
+  max-width: 1480px;
+  margin: 0 auto;
+  padding: 32px 20px 80px;
+}
 
-  &-tabs {
-    display: flex;
-    border-bottom: 1px solid #e5e7eb;
-    margin-bottom: 2rem;
+.items-index-tabs {
+  display: flex;
+  border-bottom: 1px solid #e5e7eb;
+  margin-bottom: 32px;
+}
+
+.items-index-tab {
+  padding: 16px 32px;
+  text-decoration: none;
+  color: #000;
+  font-size: 16px;
+  font-weight: 400;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+
+  &:hover {
+    color: #ef4444;
   }
 
-  &-tab {
-    padding: 1rem 2rem;
-    text-decoration: none;
-    color: #000;
-    font-size: 1rem;
-    font-weight: 400;
-    border-bottom: 2px solid transparent;
-    transition: color 0.2s, border-color 0.2s;
+  &-active {
+    color: #ef4444;
+    border-bottom-color: #ef4444;
+  }
+}
 
-    &:hover {
-      color: #ef4444;
-    }
+.items-index-content {
+  width: 100%;
+  overflow: hidden;
+}
 
-    &-active {
-      color: #ef4444;
-      border-bottom-color: #ef4444;
-    }
+.items-index-product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+
+  @media (max-width: 1280px) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
-  &-content {
-    // コンテンツエリアのスタイル
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  &-product-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1.5rem;
-
-    @media (max-width: 1280px) {
-      grid-template-columns: repeat(3, 1fr);
-    }
-
-    @media (max-width: 1024px) {
-      grid-template-columns: repeat(2, 1fr);
-    }
-
-    @media (max-width: 640px) {
-      grid-template-columns: 1fr;
-    }
+  @media (max-width: 640px) {
+    grid-template-columns: minmax(0, 1fr);
   }
+}
 
-  &-product-card {
-    display: flex;
-    flex-direction: column;
-    text-decoration: none;
-    color: inherit;
-    transition: transform 0.2s;
+.items-index-product-card {
+  width: 100%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s;
 
-    &:hover {
-      transform: translateY(-4px);
-    }
+  &:hover {
+    transform: translateY(-4px);
   }
+}
 
-  &-product-image {
+.items-index-product-image {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  background-color: #e5e7eb;
+  border-radius: 4px;
+  overflow: hidden;
+
+  img {
+    display: block;
     width: 100%;
-    aspect-ratio: 1;
+    height: 100%;
     object-fit: cover;
-    background-color: #e5e7eb;
-    border-radius: 4px;
   }
+}
 
-  &-product-name {
-    margin: 0.5rem 0 0 0;
-    font-size: 1rem;
-    color: #000;
-  }
+.items-index-product-name {
+  margin: 8px 0 0 0;
+  font-size: 16px;
+  color: #000;
 }

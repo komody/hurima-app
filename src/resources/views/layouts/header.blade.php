@@ -1,12 +1,12 @@
 @php
 // ログイン状態に応じて自動的にheaderTypeを設定
-  if (!isset($headerType)) {
-    if (auth()->check()) {
-    $headerType = 'login';
-    } else {
-    $headerType = 'not-login';
-    }
-  }
+if (!isset($headerType)) {
+if (auth()->check()) {
+$headerType = 'login';
+} else {
+$headerType = 'not-login';
+}
+}
 @endphp
 
 <header class="header">
@@ -21,7 +21,13 @@
     @else
     {{-- ログイン以外の画面 --}}
     <div class="header-search">
-      <input class="header-search-field" type="text" placeholder="なにをお探しですか？">
+      <form action="{{ route('items.index') }}" method="GET" class="header-search-form">
+        @if(request('tab') === 'mylist')
+        <input type="hidden" name="tab" value="mylist">
+        @endif
+        <input class="header-search-field" type="text" name="search" placeholder="なにをお探しですか？" value="{{ request('search') }}">
+        <button type="submit" class="header-search-submit"></button>
+      </form>
     </div>
     @endif
     <nav class="header-nav">

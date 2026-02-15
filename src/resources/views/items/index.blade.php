@@ -15,11 +15,11 @@
 
     <main class="items-index">
         <div class="items-index-tabs">
-            <a href="{{ route('items.index') }}"
+            <a href="{{ route('items.index', request()->only('search')) }}"
                 class="items-index-tab {{ request('tab') !== 'mylist' ? 'items-index-tab-active' : '' }}">
                 おすすめ
             </a>
-            <a href="{{ route('items.index', ['tab' => 'mylist']) }}"
+            <a href="{{ route('items.index', array_merge(request()->only('search'), ['tab' => 'mylist'])) }}"
                 class="items-index-tab {{ request('tab') === 'mylist' ? 'items-index-tab-active' : '' }}">
                 マイリスト
             </a>

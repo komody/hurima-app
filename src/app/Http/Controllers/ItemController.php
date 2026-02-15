@@ -13,10 +13,37 @@ class ItemController extends Controller
      */
     public function index(Request $request)
     {
-        $items = Item::with('condition')
-            ->where('sold_out', false)
-            ->orderBy('created_at', 'desc')
-            ->get();
+        $tab = $request->get('tab');
+        $search = $request->get('search');
+
+        if ($tab === 'mylist') {
+            if (!Auth::check()) {
+                $items = collect();
+            } else {
+                $query = Item::with('condition')
+                    ->whereHas('likes', function ($query) {
+                        $query->where('user_id', Auth::id());
+                    });
+
+                if ($search) {
+                    $query->where('name', 'like', '%' . $search . '%');
+                }
+
+                $items = $query->orderBy('created_at', 'desc')->get();
+            }
+        } else {
+            $query = Item::with('condition')
+                ->where('sold_out', false)
+                ->when(Auth::check(), function ($query) {
+                    $query->where('seller_id', '!=', Auth::id());
+                });
+
+            if ($search) {
+                $query->where('name', 'like', '%' . $search . '%');
+            }
+
+            $items = $query->orderBy('created_at', 'desc')->get();
+        }
 
         return view('items.index', compact('items'));
     }

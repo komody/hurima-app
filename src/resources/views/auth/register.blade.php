@@ -15,7 +15,7 @@
 
     <main class="auth-register">
         <div class="auth-register-container">
-            <h1 class="auth-register-title">会員登録</h1>
+            <h2 class="auth-register-title">会員登録</h2>
             <form method="POST" action="{{ route('register') }}" class="auth-register-form" novalidate>
                 @csrf
                 <div class="auth-register-field">

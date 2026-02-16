@@ -15,7 +15,7 @@
 
     <main class="auth-login">
         <div class="auth-login-container">
-            <h1 class="auth-login-title">ログイン</h1>
+            <h2 class="auth-login-title">ログイン</h2>
             <form method="POST" action="{{ route('login') }}" class="auth-login-form" novalidate>
                 @csrf
                 <div class="auth-login-field">

@@ -76,7 +76,7 @@
                 <div class="sell-create-field">
                     <label class="sell-create-label" for="name">商品名</label>
                     <input type="text" name="name" id="name" class="sell-create-input"
-                        value="{{ old('name') }}" placeholder="商品名を入力してください">
+                        value="{{ old('name') }}">
                     @error('name')
                     <p class="sell-create-error">{{ $message }}</p>
                     @enderror
@@ -85,7 +85,7 @@
                 <div class="sell-create-field">
                     <label class="sell-create-label" for="brand_name">ブランド名</label>
                     <input type="text" name="brand_name" id="brand_name" class="sell-create-input"
-                        value="{{ old('brand_name') }}" placeholder="ブランド名を入力してください（任意）">
+                        value="{{ old('brand_name') }}">
                     @error('brand_name')
                     <p class="sell-create-error">{{ $message }}</p>
                     @enderror
@@ -93,8 +93,7 @@
 
                 <div class="sell-create-field">
                     <label class="sell-create-label" for="description">商品の説明</label>
-                    <textarea name="description" id="description" class="sell-create-textarea" rows="5"
-                        placeholder="商品の説明を入力してください">{{ old('description') }}</textarea>
+                    <textarea name="description" id="description" class="sell-create-textarea" rows="5">{{ old('description') }}</textarea>
                     @error('description')
                     <p class="sell-create-error">{{ $message }}</p>
                     @enderror

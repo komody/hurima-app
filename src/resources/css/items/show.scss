@@ -5,16 +5,12 @@
 }
 
 .items-show-container {
-  max-width: 1200px;
-  margin: 0 auto;
+  max-width: 1300px;
+  margin: 90px auto 0;
   padding: 0 16px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 32px;
-
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-  }
 }
 
 // 商品画像セクション（左側）
@@ -26,11 +22,11 @@
 
 .items-show-image-wrapper {
   width: 100%;
-  max-width: 500px;
+  max-width: 600px;
+  height: 600px;
   aspect-ratio: 1;
-  background-color: #e5e7eb;
-  border-radius: 8px;
   overflow: hidden;
+  border-radius: 4px;
 }
 
 .items-show-image {
@@ -43,6 +39,7 @@
 .items-show-details-section {
   display: flex;
   flex-direction: column;
+  margin-left: 50px;
   gap: 32px;
 }
 
@@ -50,42 +47,47 @@
 .items-show-header {
   display: flex;
   flex-direction: column;
-  gap: 16px;
 }
 
 .items-show-product-name {
-  font-size: 30px;
+  font-size: 45px;
   font-weight: 700;
-  color: #000;
-  margin: 0;
+  margin: 0 0 10px;
 }
 
 .items-show-brand-name {
-  font-size: 16px;
-  color: #000;
-  margin: 0;
+  font-size: 20px;
+  font-weight: 400;
+  margin: 0 0 20px;
 }
 
 .items-show-price {
   font-size: 30px;
-  font-weight: 700;
-  color: #000;
-  margin: 0;
+  font-weight: 400;
+  margin: 0 0 20px;
+
+  .items-show-price-value {
+    font-size: 45px;
+    margin: 0;
+  }
 }
 
 .items-show-stats {
   display: flex;
-  gap: 24px;
+  margin: 0 0 20px 40px;
   align-items: center;
 }
 
 .items-show-stat {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 8px;
+  margin-right: 80px;
 }
 
 .items-show-like-form {
+  width: 40px;
+  height: 40px;
   display: inline-block;
   margin: 0;
   padding: 0;
@@ -114,9 +116,14 @@
   outline: none;
 }
 
+.items-show-like-count {
+  font-size: 18px;
+  font-weight: 700;
+}
+
 .items-show-stat-icon {
-  width: 24px;
-  height: 24px;
+  width: 40px;
+  height: 40px;
   display: block;
   outline: none;
   border: none;
@@ -124,19 +131,23 @@
 }
 
 .items-show-stat-count {
-  font-size: 16px;
+  font-size: 18px;
+  font-weight: 700;
   color: #000;
 }
 
 .items-show-purchase-btn {
   display: inline-block;
-  padding: 16px 32px;
-  background-color: #ef4444;
+  width: 570px;
+  height: 56px;
+  padding: 4px 20px;
+  background-color: #ff5555;
   color: #fff;
   text-decoration: none;
   text-align: center;
   border-radius: 4px;
-  font-weight: 600;
+  font-size: 30px;
+  font-weight: 700;
   transition: background-color 0.2s;
 
   &:hover {
@@ -146,16 +157,14 @@
 
 // セクション共通スタイル
 .items-show-section-title {
-  font-size: 20px;
+  font-size: 36px;
   font-weight: 700;
-  color: #000;
   margin: 0 0 16px 0;
 }
 
 // 商品説明セクション
 .items-show-description-section {
   padding-top: 32px;
-  border-top: 1px solid #e5e7eb;
 }
 
 .items-show-description-content {
@@ -163,6 +172,8 @@
   flex-direction: column;
   gap: 8px;
   color: #000;
+  font-size: 24px;
+  font-weight: 400;
   line-height: 1.6;
 
   p {
@@ -173,7 +184,6 @@
 // 商品の情報セクション
 .items-show-info-section {
   padding-top: 32px;
-  border-top: 1px solid #e5e7eb;
 }
 
 .items-show-info-content {
@@ -184,17 +194,20 @@
 
 .items-show-info-item {
   display: flex;
-  flex-direction: column;
-  gap: 8px;
+  gap: 20px;
 }
 
 .items-show-info-label {
-  font-weight: 600;
+  font-size: 24px;
+  font-weight: 700;
   color: #000;
 }
 
 .items-show-info-value {
+  font-size: 20px;
+  font-weight: 400;
   color: #000;
+  margin-left: 40px;
 }
 
 .items-show-categories {
@@ -205,17 +218,18 @@
 
 .items-show-category-tag {
   display: inline-block;
-  padding: 4px 12px;
-  background-color: #e5e7eb;
+  height: 30px;
+  padding: 0 12px;
+  background-color: #d9d9d9;
   color: #000;
-  border-radius: 4px;
-  font-size: 14px;
+  border-radius: 15px;
+  font-size: 20px;
+  font-weight: 400;
 }
 
 // コメントセクション
 .items-show-comments-section {
   padding-top: 32px;
-  border-top: 1px solid #e5e7eb;
 }
 
 .items-show-comments-list {
@@ -234,31 +248,35 @@
 .items-show-comment-header {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 20px;
+  margin-bottom: 20px;
 }
 
 .items-show-comment-avatar {
-  width: 40px;
-  height: 40px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
   background-color: #e5e7eb;
 }
 
 .items-show-comment-username {
-  font-weight: 600;
+  font-size: 30px;
+  font-weight: 700;
   color: #000;
 }
 
 .items-show-comment-content {
   padding: 12px;
-  background-color: #f3f4f6;
+  font-size: 20px;
+  font-weight: 400;
+  background-color: #e5e5e5;
   border-radius: 4px;
   color: #000;
   line-height: 1.6;
 }
 
 .items-show-no-comments {
-  color: #6b7280;
+  color: #e5e5e5;
   margin: 0;
 }
 
@@ -268,21 +286,21 @@
 }
 
 .items-show-comment-form-title {
-  font-size: 16px;
+  font-size: 28px;
   font-weight: 700;
   color: #000;
-  margin: 0 0 16px 0;
+  margin: 0 0 30px 0;
 }
 
 .items-show-comment-form {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 30px;
 }
 
 .items-show-comment-textarea {
   width: 100%;
-  min-height: 120px;
+  min-height: 250px;
   padding: 12px;
   border: 1px solid #000;
   border-radius: 4px;
@@ -298,12 +316,12 @@
 
 .items-show-comment-submit-btn {
   padding: 12px 24px;
-  background-color: #ef4444;
+  background-color: #ff5555;
   color: #fff;
   border: none;
   border-radius: 4px;
-  font-size: 16px;
-  font-weight: 600;
+  font-size: 25px;
+  font-weight: 700;
   cursor: pointer;
   transition: background-color 0.2s;
 

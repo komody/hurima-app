@@ -29,11 +29,11 @@
 
             <div class="items-show-details-section">
                 <div class="items-show-header">
-                    <h1 class="items-show-product-name">{{ $item->name }}</h1>
+                    <p class="items-show-product-name">{{ $item->name }}</p>
                     @if($item->brand_name)
                     <p class="items-show-brand-name">{{ $item->brand_name }}</p>
                     @endif
-                    <p class="items-show-price">¥{{ number_format($item->price) }} (税込)</p>
+                    <p class="items-show-price">¥<span class="items-show-price-value">{{ number_format($item->price) }}</span> (税込)</p>
 
                     <div class="items-show-stats">
                         <div class="items-show-stat">
@@ -69,7 +69,7 @@
                 </div>
 
                 <div class="items-show-description-section">
-                    <h2 class="items-show-section-title">商品説明</h2>
+                    <h3 class="items-show-section-title">商品説明</h3>
                     <div class="items-show-description-content">
                         @if($item->condition)
                         <p>商品の状態: {{ $item->condition->name }}</p>
@@ -80,7 +80,7 @@
                 </div>
 
                 <div class="items-show-info-section">
-                    <h2 class="items-show-section-title">商品の情報</h2>
+                    <h3 class="items-show-section-title">商品の情報</h3>
                     <div class="items-show-info-content">
                         @if($item->categories->count() > 0)
                         <div class="items-show-info-item">
@@ -103,7 +103,7 @@
                 </div>
 
                 <div class="items-show-comments-section">
-                    <h2 class="items-show-section-title">コメント({{ $item->comments_count }})</h2>
+                    <h3 class="items-show-section-title">コメント({{ $item->comments_count }})</h3>
 
                     <div class="items-show-comments-list">
                         @forelse($item->comments as $comment)

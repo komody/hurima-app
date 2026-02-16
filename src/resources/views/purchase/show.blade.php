@@ -19,18 +19,22 @@
             <div class="purchase-show-message">{{ session('message') }}</div>
             @endif
             <div class="purchase-show-main">
-                <div class="purchase-show-product-section">
-                    <div class="purchase-show-image-wrapper">
-                        @php
-                        $noImageUrl = asset('storage/layouts/no_image.png');
-                        @endphp
-                        <img src="{{ $item->image_url }}"
-                            alt="{{ $item->name }}"
-                            class="purchase-show-image"
-                            onerror="this.src='{{ $noImageUrl }}'">
+                <div class="purchase-show-detail-section">
+                    <div class="purchase-show-product-section">
+                        <div class="purchase-show-image-wrapper">
+                            @php
+                            $noImageUrl = asset('storage/layouts/no_image.png');
+                            @endphp
+                            <img src="{{ $item->image_url }}"
+                                alt="{{ $item->name }}"
+                                class="purchase-show-image"
+                                onerror="this.src='{{ $noImageUrl }}'">
+                        </div>
+                        <div class="purchase-show-product-details">
+                            <p class="purchase-show-product-name">{{ $item->name }}</p>
+                            <p class="purchase-show-price">¥{{ number_format($item->price) }}</p>
+                        </div>
                     </div>
-                    <h1 class="purchase-show-product-name">{{ $item->name }}</h1>
-                    <p class="purchase-show-price">¥{{ number_format($item->price) }}</p>
 
                     <div class="purchase-show-payment-section">
                         <label for="payment_method" class="purchase-show-label">支払い方法</label>
@@ -59,12 +63,12 @@
                 <div class="purchase-show-summary-section">
                     <div class="purchase-show-summary-box">
                         <div class="purchase-show-summary-row">
-                            <span>商品代金</span>
-                            <span>¥{{ number_format($item->price) }}</span>
+                            <span class="purchase-show-summary-label">商品代金</span>
+                            <span class="purchase-show-summary-value">¥{{ number_format($item->price) }}</span>
                         </div>
                         <div class="purchase-show-summary-row">
-                            <span>支払い方法</span>
-                            <span id="payment_method_display">{{ $paymentMethod ?: '選択してください' }}</span>
+                            <span class="purchase-show-summary-label">支払い方法</span>
+                            <span id="payment_method_display" class="purchase-show-summary-value">{{ $paymentMethod ?: '選択してください' }}</span>
                         </div>
                         <button type="button" class="purchase-show-buy-btn">購入する</button>
                     </div>

@@ -14,9 +14,8 @@
     @include('layouts.header', ['headerType' => 'login'])
 
     <main class="purchase-address-edit">
-        <h1 class="purchase-address-edit-title">送付先住所変更画面</h1>
         <div class="purchase-address-edit-container">
-            <h2 class="purchase-address-edit-heading">住所の変更</h2>
+            <h2 class="purchase-address-edit-title">住所の変更</h2>
 
             <form method="POST" action="{{ route('purchase.address.update', ['item_id' => $item_id]) }}" class="purchase-address-edit-form">
                 @csrf

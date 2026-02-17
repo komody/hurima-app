@@ -33,7 +33,6 @@ class ItemController extends Controller
             }
         } else {
             $query = Item::with('condition')
-                ->where('sold_out', false)
                 ->when(Auth::check(), function ($query) {
                     $query->where('seller_id', '!=', Auth::id());
                 });

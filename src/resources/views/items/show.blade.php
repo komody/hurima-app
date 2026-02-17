@@ -24,6 +24,11 @@
                         alt="{{ $item->name }}"
                         class="items-show-image"
                         onerror="this.src='{{ $noImageUrl }}'">
+                    @if($item->sold_out)
+                    <div class="items-show-sold-overlay">
+                        <span class="items-show-sold-text">SOLD</span>
+                    </div>
+                    @endif
                 </div>
             </div>
 

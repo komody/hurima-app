@@ -109,7 +109,12 @@ Route::middleware(['auth', 'profile.completed'])->group(function () {
   Route::get('/purchase/address/{item_id}', [PurchaseController::class, 'editAddress'])->name('purchase.address.edit');
   Route::put('/purchase/address/{item_id}', [PurchaseController::class, 'updateAddress'])->name('purchase.address.update');
   Route::get('/mypage', [MypageController::class, 'index'])->name('mypage.index');
-  // ... その他の認証が必要なルート
+  Route::post('/purchase/{item_id}/complete-convenience', [PurchaseController::class, 'completeConveniencePurchase'])
+    ->name('purchase.complete-convenience');
+  Route::post('/purchase/{item_id}/checkout', [PurchaseController::class, 'createCheckoutSession'])
+    ->name('purchase.checkout');
+  Route::get('/purchase/{item_id}/success', [PurchaseController::class, 'checkoutSuccess'])
+    ->name('purchase.success');
 });
 
 // プロフィール設定画面は認証のみ（profile.completedは適用しない）

@@ -31,6 +31,19 @@
             @endphp
             <div class="items-index-product-grid">
                 @forelse($items as $item)
+                @if($item->sold_out)
+                <div class="items-index-product-card items-index-product-card-sold">
+                    <div class="items-index-product-image items-index-product-image--sold">
+                        <img src="{{ $item->image_url }}"
+                            alt="{{ $item->name }}"
+                            onerror="this.src='{{ $noImageUrl }}'">
+                        <div class="items-index-product-sold-overlay">
+                            <span class="items-index-product-sold-text">SOLD</span>
+                        </div>
+                    </div>
+                    <p class="items-index-product-name">{{ $item->name }}</p>
+                </div>
+                @else
                 <a href="{{ route('items.show', ['item_id' => $item->id]) }}" class="items-index-product-card">
                     <div class="items-index-product-image">
                         <img src="{{ $item->image_url }}"
@@ -39,6 +52,7 @@
                     </div>
                     <p class="items-index-product-name">{{ $item->name }}</p>
                 </a>
+                @endif
                 @empty
                 <p>商品が見つかりませんでした。</p>
                 @endforelse

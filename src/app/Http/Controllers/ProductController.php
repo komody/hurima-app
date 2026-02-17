@@ -14,7 +14,6 @@ class ProductController extends Controller
     {
         $items = Item::with('condition')
             ->withCount(['comments', 'likes'])
-            ->where('sold_out', false)
             ->orderBy('created_at', 'desc')
             ->get();
 

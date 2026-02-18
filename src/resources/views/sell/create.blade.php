@@ -55,14 +55,20 @@
 
                 <div class="sell-create-field">
                     <label class="sell-create-label" for="condition_id">商品の状態</label>
-                    <select name="condition_id" id="condition_id" class="sell-create-select">
-                        <option value="">選択してください</option>
-                        @foreach($conditions as $condition)
-                        <option value="{{ $condition->id }}" {{ old('condition_id') == $condition->id ? 'selected' : '' }}>
-                            {{ $condition->name }}
-                        </option>
-                        @endforeach
-                    </select>
+                    <div class="custom-dropdown" id="condition-dropdown">
+                        <input type="hidden" name="condition_id" id="condition_id" value="{{ old('condition_id') }}">
+                        <button type="button" class="custom-dropdown-trigger" aria-expanded="false" aria-haspopup="listbox" aria-labelledby="condition-label">
+                            <span class="custom-dropdown-value">選択してください</span>
+                            <span class="custom-dropdown-arrow"></span>
+                        </button>
+                        <ul class="custom-dropdown-list" role="listbox" id="condition-list">
+                            @foreach($conditions as $condition)
+                            <li class="custom-dropdown-option" role="option" data-value="{{ $condition->id }}" {{ old('condition_id') == $condition->id ? 'data-selected' : '' }}>
+                                {{ $condition->name }}
+                            </li>
+                            @endforeach
+                        </ul>
+                    </div>
                     @error('condition_id')
                     <p class="sell-create-error">{{ $message }}</p>
                     @enderror
@@ -118,6 +124,49 @@
             <button type="submit" class="sell-create-submit-btn">出品する</button>
         </form>
     </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const dropdown = document.getElementById('condition-dropdown');
+            const trigger = dropdown.querySelector('.custom-dropdown-trigger');
+            const valueDisplay = dropdown.querySelector('.custom-dropdown-value');
+            const hiddenInput = dropdown.querySelector('input[name="condition_id"]');
+            const list = dropdown.querySelector('.custom-dropdown-list');
+            const options = dropdown.querySelectorAll('.custom-dropdown-option');
+
+            // 初期表示（old値がある場合）
+            const selectedOption = dropdown.querySelector('.custom-dropdown-option[data-selected]');
+            if (selectedOption) {
+                valueDisplay.textContent = selectedOption.textContent.trim();
+                valueDisplay.classList.add('has-value');
+                selectedOption.classList.add('selected');
+            }
+
+            // 開閉
+            trigger.addEventListener('click', function(e) {
+                e.stopPropagation();
+                dropdown.classList.toggle('open');
+            });
+
+            // オプション選択
+            options.forEach(function(option) {
+                option.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    options.forEach(o => o.classList.remove('selected'));
+                    option.classList.add('selected');
+                    hiddenInput.value = option.dataset.value;
+                    valueDisplay.textContent = option.textContent.trim();
+                    valueDisplay.classList.add('has-value');
+                    dropdown.classList.remove('open');
+                });
+            });
+
+            // 外側クリックで閉じる
+            document.addEventListener('click', function() {
+                dropdown.classList.remove('open');
+            });
+        });
+    </script>
 </body>
 
 </html>

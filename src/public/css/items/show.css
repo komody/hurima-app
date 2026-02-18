@@ -145,7 +145,7 @@
   transition: background-color 0.2s;
 }
 .items-show-purchase-btn:hover {
-  background-color: #dc2626;
+  opacity: 0.9;
 }
 
 .items-show-section-title {
@@ -312,5 +312,5 @@
   transition: background-color 0.2s;
 }
 .items-show-comment-submit-btn:hover {
-  background-color: #dc2626;
+  opacity: 0.9;
 }

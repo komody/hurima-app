@@ -63,7 +63,7 @@
   transition: background-color 0.2s;
 }
 .auth-register-submit-btn:hover {
-  background-color: #dc2626;
+  opacity: 0.9;
 }
 
 .auth-register-login-link {

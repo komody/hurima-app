@@ -68,7 +68,7 @@
 }
 
 .profile-edit-image-button:hover {
-  background-color: #ffe2e2;
+  opacity: 0.8;
 }
 
 .profile-edit-image-input {
@@ -122,7 +122,7 @@
 }
 
 .profile-edit-submit-btn:hover {
-  background-color: #dc2626;
+  opacity: 0.9;
 }
 
 .profile-edit-errors {

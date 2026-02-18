@@ -57,7 +57,7 @@
   transition: background-color 0.2s;
 }
 .auth-verify-email-button:hover {
-  background-color: #d1d5db;
+  opacity: 0.9;
 }
 
 .auth-verify-email-resend-link {

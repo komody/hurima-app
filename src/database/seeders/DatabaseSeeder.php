@@ -19,6 +19,11 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UsersTableSeeder::class,
         ]);
+
+        // アカウントデータをシード（ユーザーに依存）
+        $this->call([
+            AccountsTableSeeder::class,
+        ]);
         
         // マスターデータをシード
         $this->call([
@@ -29,6 +34,11 @@ class DatabaseSeeder extends Seeder
         // 商品データをシード（ユーザー、コンディション、カテゴリーに依存）
         $this->call([
             ItemTableSeeder::class,
+        ]);
+
+        // 商品とカテゴリの中間テーブルをシード
+        $this->call([
+            CategoryItemTableSeeder::class,
         ]);
     }
 }

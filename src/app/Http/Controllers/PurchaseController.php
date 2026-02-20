@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PurchaseRequest;
 use App\Models\Item;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -100,17 +101,34 @@ class PurchaseController extends Controller
                 ->with('error', '自分の商品は購入できません。');
         }
 
-        DB::transaction(function () use ($item) {
+        $account = Auth::user()->account;
+        $delivery = session('purchase_delivery') ?? [
+            'postal_code' => $account?->postal_code ?? '',
+            'address' => $account?->address ?? '',
+            'building' => $account?->building ?? '',
+        ];
+        $paymentMethod = $request->input('payment_method', 'コンビニ払い');
+
+        DB::transaction(function () use ($item, $delivery, $paymentMethod) {
             $item->update([
                 'buyer_id' => Auth::id(),
                 'sold_out' => true,
+            ]);
+
+            Order::create([
+                'user_id' => Auth::id(),
+                'item_id' => $item->id,
+                'payment_method' => $paymentMethod,
+                'delivery_postal_code' => $delivery['postal_code'] ?? '',
+                'delivery_address' => $delivery['address'] ?? '',
+                'delivery_building' => $delivery['building'] ?? '',
             ]);
         });
 
         session()->forget(['purchase_delivery', 'purchase_payment_method']);
 
         return redirect()
-            ->route('mypage.index')
+            ->route('items.index')
             ->with('message', '購入が完了しました。');
     }
 
@@ -129,6 +147,13 @@ class PurchaseController extends Controller
         }
 
         Stripe::setApiKey(config('services.stripe.secret'));
+
+        $account = Auth::user()->account;
+        $delivery = session('purchase_delivery') ?? [
+            'postal_code' => $account?->postal_code ?? '',
+            'address' => $account?->address ?? '',
+            'building' => $account?->building ?? '',
+        ];
 
         $successUrl = url("/purchase/{$item_id}/success") . '?session_id={CHECKOUT_SESSION_ID}';
         $cancelUrl = route('purchase.show', ['item_id' => $item_id]);
@@ -153,6 +178,10 @@ class PurchaseController extends Controller
                 'metadata' => [
                     'item_id' => (string) $item->id,
                     'user_id' => (string) Auth::id(),
+                    'payment_method' => 'カード支払い',
+                    'delivery_postal_code' => $delivery['postal_code'] ?? '',
+                    'delivery_address' => $delivery['address'] ?? '',
+                    'delivery_building' => $delivery['building'] ?? '',
                 ],
                 'locale' => 'ja',
             ]);
@@ -200,17 +229,26 @@ class PurchaseController extends Controller
                     ->with('error', '不正なリクエストです。');
             }
 
-            DB::transaction(function () use ($item) {
+            DB::transaction(function () use ($item, $session) {
                 $item->update([
                     'buyer_id' => Auth::id(),
                     'sold_out' => true,
+                ]);
+
+                Order::create([
+                    'user_id' => (int) $session->metadata->user_id,
+                    'item_id' => (int) $session->metadata->item_id,
+                    'payment_method' => $session->metadata->payment_method ?? 'カード支払い',
+                    'delivery_postal_code' => $session->metadata->delivery_postal_code ?? '',
+                    'delivery_address' => $session->metadata->delivery_address ?? '',
+                    'delivery_building' => $session->metadata->delivery_building ?? '',
                 ]);
             });
 
             session()->forget(['purchase_delivery', 'purchase_payment_method']);
 
             return redirect()
-                ->route('mypage.index')
+                ->route('items.index')
                 ->with('message', '購入が完了しました。');
         } catch (ApiErrorException $e) {
             return redirect()

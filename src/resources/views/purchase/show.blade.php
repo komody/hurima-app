@@ -102,7 +102,10 @@
                 const form = document.createElement('form');
                 form.method = 'POST';
                 form.action = '{{ route("purchase.complete-convenience", ["item_id" => $item->id]) }}';
-                form.innerHTML = `@csrf`;
+                form.innerHTML = `
+                    @csrf
+                    <input type="hidden" name="payment_method" value="${paymentMethod}">
+                `;
                 document.body.appendChild(form);
                 form.submit();
                 return;

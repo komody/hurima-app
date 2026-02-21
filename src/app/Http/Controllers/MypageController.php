@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Http\Requests\ProfileRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -40,23 +41,17 @@ class MypageController extends Controller
         return view('mypage.profile.edit');
     }
 
-    public function updateProfile(Request $request)
+    public function updateProfile(ProfileRequest $request)
     {
         /** @var User|null $user */
         $user = Auth::user();
-
+        
         if (!$user) {
             return redirect()->route('login')->with('error', 'ログインが必要です');
         }
-
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'postal_code' => 'required|string|max:255',
-            'address' => 'required|string|max:255',
-            'building' => 'nullable|string|max:255',
-            'profile_image' => 'nullable|image|max:2048',
-        ]);
-
+        
+        $validated = $request->validated();
+        
         // ユーザー名を更新
         $user->update(['name' => $validated['name']]);
 

@@ -52,7 +52,7 @@
                                 </button>
                             </form>
                             @else
-                            <a href="{{ route('login') }}" class="items-show-like-link">
+                            <a href="{{ route('login') }}?intended={{ urlencode(url()->current()) }}" class="items-show-like-link">
                                 <img src="{{ asset('storage/layouts/likes_icon.svg') }}"
                                     alt="いいね"
                                     class="items-show-stat-icon">

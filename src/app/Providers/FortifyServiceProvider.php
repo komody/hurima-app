@@ -81,8 +81,8 @@ class FortifyServiceProvider extends ServiceProvider
                     // 通常のログイン成功時
                     $intendedUrl = session()->get('url.intended');
 
-                    // コメント投稿を試みていた場合は商品詳細へ
-                    if ($intendedUrl && preg_match('#/item/(\d+)/comment#', $intendedUrl, $matches)) {
+                    // コメント投稿またはいいねを試みていた場合は商品詳細へ
+                    if ($intendedUrl && preg_match('#/item/(\d+)(?:/(?:comment|like))?#', $intendedUrl, $matches)) {
                         return redirect()->route('items.show', ['item_id' => $matches[1]]);
                     }
 

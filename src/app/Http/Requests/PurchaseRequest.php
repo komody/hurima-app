@@ -6,34 +6,28 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class PurchaseRequest extends FormRequest
 {
-    /**
-     * リクエストの認可
-     */
     public function authorize()
     {
         return true;
     }
 
-    /**
-     * バリデーションルール
-     */
     public function rules()
     {
-        return [
-            'postal_code' => 'required|string|max:255',
-            'address' => 'required|string|max:255',
-            'building' => 'nullable|string|max:255',
-        ];
+        $rules = [];
+
+        // 購入完了（コンビニ払い）のフォーム
+        if ($this->routeIs('purchase.complete-convenience')) {
+            $rules['payment_method'] = 'required|in:コンビニ払い,カード支払い';
+        }
+
+        return $rules;
     }
 
-    /**
-     * バリデーションエラーメッセージ
-     */
     public function messages()
     {
         return [
-            'postal_code.required' => '郵便番号を入力してください',
-            'address.required' => '住所を入力してください',
+            'payment_method.required' => '支払い方法を選択してください',
+            'payment_method.in' => '支払い方法が不正です',
         ];
     }
 }

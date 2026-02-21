@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AddressRequest;
 use App\Http\Requests\PurchaseRequest;
 use App\Models\Item;
 use App\Models\Order;
@@ -67,7 +68,7 @@ class PurchaseController extends Controller
     /**
      * 送付先住所を更新（セッションに保存）
      */
-    public function updateAddress(PurchaseRequest $request, $item_id)
+    public function updateAddress(AddressRequest $request, $item_id)
     {
         $validated = $request->validated();
         session([
@@ -85,7 +86,7 @@ class PurchaseController extends Controller
     /**
      * コンビニ払い：Stripe を使わず購入を完了する
      */
-    public function completeConveniencePurchase(Request $request, $item_id)
+    public function completeConveniencePurchase(PurchaseRequest $request, $item_id)
     {
         $item = Item::findOrFail($item_id);
 
@@ -107,7 +108,7 @@ class PurchaseController extends Controller
             'address' => $account?->address ?? '',
             'building' => $account?->building ?? '',
         ];
-        $paymentMethod = $request->input('payment_method', 'コンビニ払い');
+        $paymentMethod = $request->validated()['payment_method'];
 
         DB::transaction(function () use ($item, $delivery, $paymentMethod) {
             $item->update([

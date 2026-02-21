@@ -17,8 +17,11 @@ class AuthController extends Controller
     /**
      * ログイン画面を表示
      */
-    public function showLoginForm()
+    public function showLoginForm(Request $request)
     {
+        if ($request->has('intended')) {
+            session()->put('url.intended', $request->intended);
+        }
         return view('auth.login');
     }
 }

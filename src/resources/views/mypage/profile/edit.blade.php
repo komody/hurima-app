@@ -21,22 +21,6 @@
                 @csrf
                 @method('PUT')
 
-                @if ($errors->any())
-                <div class="profile-edit-errors">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-                @endif
-
-                @if (session('message'))
-                <div class="profile-edit-message">
-                    {{ session('message') }}
-                </div>
-                @endif
-
                 <div class="profile-edit-image-section">
                     <div class="profile-edit-image-wrapper">
                         @if(auth()->user()->account?->profile_image)
@@ -45,8 +29,13 @@
                         <div class="profile-edit-image-placeholder"></div>
                         @endif
                     </div>
-                    <label for="profile_image" class="profile-edit-image-button">画像を選択する</label>
-                    <input type="file" id="profile_image" name="profile_image" accept="image/*" class="profile-edit-image-input" style="display: none;">
+                    <div class="profile-edit-image-button-wrapper">
+                        <label for="profile_image" class="profile-edit-image-button">画像を選択する</label>
+                        <input type="file" id="profile_image" name="profile_image" accept="image/*" class="profile-edit-image-input" style="display: none;">
+                        @error('profile_image')
+                        <span class="profile-edit-error">{{ $message }}</span>
+                        @enderror
+                    </div>
                 </div>
 
                 <div class="profile-edit-field">

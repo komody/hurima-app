@@ -21,16 +21,6 @@
                 @csrf
                 @method('PUT')
 
-                @if ($errors->any())
-                <div class="purchase-address-edit-errors">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-                @endif
-
                 <div class="purchase-address-edit-field">
                     <label for="postal_code" class="purchase-address-edit-label">郵便番号</label>
                     <input type="text" id="postal_code" name="postal_code" value="{{ old('postal_code', $deliveryAddress['postal_code']) }}" class="purchase-address-edit-input @error('postal_code') is-invalid @enderror">

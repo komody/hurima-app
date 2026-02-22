@@ -34,4 +34,9 @@ class CommentRequest extends FormRequest
       'content.max' => 'コメントは255文字以内で入力してください',
     ];
   }
+
+  protected function getRedirectUrl()
+  {
+    return url()->previous() . '#comment-form';
+  }
 }

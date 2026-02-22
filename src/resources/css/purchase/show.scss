@@ -108,6 +108,20 @@
   border-color: #3b82f6;
 }
 
+.purchase-show-payment-error {
+  color: #c33;
+  font-size: 14px;
+  margin: 8px 0 0 80px;
+}
+
+.purchase-show-select-error {
+  border-color: #c33;
+
+  &:focus {
+    border-color: #c33;
+  }
+}
+
 .purchase-show-delivery-section {
   padding: 32px 32px 60px;
   border-top: 1px solid #000;

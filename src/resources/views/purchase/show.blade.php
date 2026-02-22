@@ -41,7 +41,11 @@
 
                     <div class="purchase-show-payment-section">
                         <label for="payment_method" class="purchase-show-label">支払い方法</label>
-                        <select id="payment_method" name="payment_method" class="purchase-show-select">
+                        @error('payment_method')
+                        <p class="purchase-show-payment-error">{{ $message }}</p>
+                        @enderror
+                        <p id="payment_method_client_error" class="purchase-show-payment-error" style="display: none;"></p>
+                        <select id="payment_method" name="payment_method" class="purchase-show-select @error('payment_method') purchase-show-select-error @enderror">
                             <option value="">選択してください</option>
                             <option value="コンビニ払い" {{ $paymentMethod === 'コンビニ払い' ? 'selected' : '' }}>コンビニ払い</option>
                             <option value="カード支払い" {{ $paymentMethod === 'カード支払い' ? 'selected' : '' }}>カード支払い</option>
@@ -81,16 +85,20 @@
     </main>
 
     <script>
-        document.getElementById('payment_method').addEventListener('change', function() {
-            const display = document.getElementById('payment_method_display');
-            display.textContent = this.value || '選択してください';
-        });
-
         document.getElementById('buy-btn').addEventListener('click', async function() {
             const paymentMethod = document.getElementById('payment_method').value;
+            const errorEl = document.getElementById('payment_method_client_error');
+            const selectEl = document.getElementById('payment_method');
+
+            // クライアント側バリデーション：エラー表示をリセット
+            errorEl.style.display = 'none';
+            errorEl.textContent = '';
+            selectEl.classList.remove('purchase-show-select-error');
 
             if (!paymentMethod) {
-                alert('支払い方法を選択してください。');
+                errorEl.textContent = '支払い方法を選択してください。';
+                errorEl.style.display = 'block';
+                selectEl.classList.add('purchase-show-select-error');
                 return;
             }
 

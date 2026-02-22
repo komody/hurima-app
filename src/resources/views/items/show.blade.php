@@ -126,7 +126,7 @@
                         @endforelse
                     </div>
 
-                    <div class="items-show-comment-form-section">
+                    <div class="items-show-comment-form-section" id="comment-form">
                         <h3 class="items-show-comment-form-title">商品へのコメント</h3>
                         <form class="items-show-comment-form" method="POST" action="{{ route('items.comment.store', ['item_id' => $item->id]) }}">
                             @csrf
@@ -134,7 +134,7 @@
                             <p class="items-show-comment-error">{{ $message }}</p>
                             @enderror
                             <textarea name="content"
-                                class="items-show-comment-textarea"
+                                class="items-show-comment-textarea @error('content') items-show-comment-textarea-error @enderror"
                                 placeholder="コメントを入力してください">{{ old('content') }}</textarea>
                             <button type="submit" class="items-show-comment-submit-btn">
                                 コメントを送信する

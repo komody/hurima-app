@@ -314,6 +314,21 @@
   }
 }
 
+// バリデーションエラー時のスタイル
+.items-show-comment-error {
+  color: #c33;
+  font-size: 14px;
+  margin: 0 0 8px 0;
+}
+
+.items-show-comment-textarea-error {
+  border-color: #c33;
+
+  &:focus {
+    border-color: #c33;
+  }
+}
+
 .items-show-comment-submit-btn {
   padding: 12px 24px;
   background-color: #ff5555;

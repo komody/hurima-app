@@ -16,7 +16,7 @@
     <main class="sell-create">
         <h2 class="sell-create-title">商品の出品</h2>
 
-        <form class="sell-create-form" method="POST" action="{{ route('sell.store') }}" enctype="multipart/form-data">
+        <form class="sell-create-form" method="POST" action="{{ route('sell.store') }}" enctype="multipart/form-data" novalidate>
             @csrf
 
             {{-- 商品画像 --}}
@@ -24,7 +24,7 @@
                 <div class="sell-create-image-title">商品画像</div>
                 <div class="sell-create-image-area">
                     <label class="sell-create-image-label">
-                        <input type="file" name="image" accept=".jpeg,.jpg,.png" class="sell-create-image-input">
+                        <input type="file" name="image" class="sell-create-image-input">
                         <span class="sell-create-image-button">画像を選択する</span>
                     </label>
                 </div>
@@ -112,7 +112,7 @@
                 <div class="sell-create-field">
                     <label class="sell-create-label" for="price">価格</label>
                     <div class="sell-create-price-wrapper">
-                        <input type="number" name="price" id="price" class="sell-create-input sell-create-price-input"
+                        <input name="price" id="price" class="sell-create-input sell-create-price-input"
                             value="{{ old('price') }}" placeholder="￥" min="0" step="1">
                     </div>
                     @error('price')

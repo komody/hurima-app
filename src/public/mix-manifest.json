@@ -1,7 +1,10 @@
 {
     "/js/app.js": "/js/app.js",
+    "/js/sell/create.js": "/js/sell/create.js",
+    "/js/purchase/show.js": "/js/purchase/show.js",
+    "/js/mypage/profile/edit.js": "/js/mypage/profile/edit.js",
+    "/css/auth/register.css": "/css/auth/register.css",
     "/css/auth/login.css": "/css/auth/login.css",
-    "/css/products/index.css": "/css/products/index.css",
     "/css/items/show.css": "/css/items/show.css",
     "/css/items/index.css": "/css/items/index.css",
     "/css/app.css": "/css/app.css",
@@ -12,6 +15,5 @@
     "/css/sell/create.css": "/css/sell/create.css",
     "/css/purchase/address/edit.css": "/css/purchase/address/edit.css",
     "/css/purchase/show.css": "/css/purchase/show.css",
-    "/css/auth/verify-email.css": "/css/auth/verify-email.css",
-    "/css/auth/register.css": "/css/auth/register.css"
+    "/css/auth/verify-email.css": "/css/auth/verify-email.css"
 }

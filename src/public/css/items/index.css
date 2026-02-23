@@ -17,7 +17,7 @@
   color: #5f5f5f;
 }
 .items-index-tab:hover {
-  color: #ff0000;
+  opacity: 0.8;
 }
 .items-index-tab-active {
   color: #ff0000;

@@ -13,11 +13,11 @@
 <body>
     @include('layouts.header', ['headerType' => 'login'])
 
-    <main class="purchase-show">
+    <main class="purchase-show"
+          data-checkout-url="{{ route('purchase.checkout', ['item_id' => $item->id]) }}"
+          data-convenience-url="{{ route('purchase.complete-convenience', ['item_id' => $item->id]) }}"
+          data-csrf="{{ csrf_token() }}">
         <div class="purchase-show-container">
-            @if (session('message'))
-            <div class="purchase-show-message">{{ session('message') }}</div>
-            @endif
             @if (session('error'))
             <div class="purchase-show-message purchase-show-error">{{ session('error') }}</div>
             @endif
@@ -84,74 +84,7 @@
         </div>
     </main>
 
-    <script>
-        document.getElementById('buy-btn').addEventListener('click', async function() {
-            const paymentMethod = document.getElementById('payment_method').value;
-            const errorEl = document.getElementById('payment_method_client_error');
-            const selectEl = document.getElementById('payment_method');
-
-            // クライアント側バリデーション：エラー表示をリセット
-            errorEl.style.display = 'none';
-            errorEl.textContent = '';
-            selectEl.classList.remove('purchase-show-select-error');
-
-            if (!paymentMethod) {
-                errorEl.textContent = '支払い方法を選択してください。';
-                errorEl.style.display = 'block';
-                selectEl.classList.add('purchase-show-select-error');
-                return;
-            }
-
-            if (paymentMethod === 'コンビニ払い') {
-                const btn = this;
-                btn.disabled = true;
-                btn.textContent = '処理中...';
-
-                const form = document.createElement('form');
-                form.method = 'POST';
-                form.action = '{{ route("purchase.complete-convenience", ["item_id" => $item->id]) }}';
-                form.innerHTML = `
-                    @csrf
-                    <input type="hidden" name="payment_method" value="${paymentMethod}">
-                `;
-                document.body.appendChild(form);
-                form.submit();
-                return;
-            }
-
-            if (paymentMethod === 'カード支払い') {
-                const btn = this;
-                btn.disabled = true;
-                btn.textContent = '処理中...';
-
-                try {
-                    const res = await fetch('{{ route("purchase.checkout", ["item_id" => $item->id]) }}', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                            'Accept': 'application/json',
-                        },
-                    });
-                    const data = await res.json();
-
-                    if (!res.ok) {
-                        throw new Error(data.error || 'エラーが発生しました。');
-                    }
-
-                    if (data.url) {
-                        window.location.href = data.url;
-                    } else {
-                        throw new Error('決済画面のURLを取得できませんでした。');
-                    }
-                } catch (err) {
-                    alert(err.message || 'エラーが発生しました。');
-                    btn.disabled = false;
-                    btn.textContent = '購入する';
-                }
-            }
-        });
-    </script>
+    <script src="{{ asset('js/purchase/show.js') }}"></script>
 </body>
 
 </html>

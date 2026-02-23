@@ -19352,19 +19352,6 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
 
 /***/ },
 
-/***/ "./resources/css/auth/register.scss"
-/*!******************************************!*\
-  !*** ./resources/css/auth/register.scss ***!
-  \******************************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ },
-
 /***/ "./resources/css/auth/verify-email.scss"
 /*!**********************************************!*\
   !*** ./resources/css/auth/verify-email.scss ***!
@@ -19508,10 +19495,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ },
 
-/***/ "./resources/css/products/index.scss"
-/*!*******************************************!*\
-  !*** ./resources/css/products/index.scss ***!
-  \*******************************************/
+/***/ "./resources/css/auth/login.scss"
+/*!***************************************!*\
+  !*** ./resources/css/auth/login.scss ***!
+  \***************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -19521,10 +19508,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ },
 
-/***/ "./resources/css/auth/login.scss"
-/*!***************************************!*\
-  !*** ./resources/css/auth/login.scss ***!
-  \***************************************/
+/***/ "./resources/css/auth/register.scss"
+/*!******************************************!*\
+  !*** ./resources/css/auth/register.scss ***!
+  \******************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -19856,8 +19843,8 @@ module.exports = /*#__PURE__*/JSON.parse('{"name":"axios","version":"0.21.4","de
 /******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
 /******/ 		var installedChunks = {
 /******/ 			"/js/app": 0,
+/******/ 			"css/auth/register": 0,
 /******/ 			"css/auth/login": 0,
-/******/ 			"css/products/index": 0,
 /******/ 			"css/items/show": 0,
 /******/ 			"css/items/index": 0,
 /******/ 			"css/app": 0,
@@ -19868,8 +19855,7 @@ module.exports = /*#__PURE__*/JSON.parse('{"name":"axios","version":"0.21.4","de
 /******/ 			"css/sell/create": 0,
 /******/ 			"css/purchase/address/edit": 0,
 /******/ 			"css/purchase/show": 0,
-/******/ 			"css/auth/verify-email": 0,
-/******/ 			"css/auth/register": 0
+/******/ 			"css/auth/verify-email": 0
 /******/ 		};
 /******/ 		
 /******/ 		// no chunk on demand loading
@@ -19919,21 +19905,20 @@ module.exports = /*#__PURE__*/JSON.parse('{"name":"axios","version":"0.21.4","de
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
-/******/ 	__webpack_require__.O(undefined, ["css/auth/login","css/products/index","css/items/show","css/items/index","css/app","css/welcome","css/layouts/header","css/mypage/profile/edit","css/mypage/index","css/sell/create","css/purchase/address/edit","css/purchase/show","css/auth/verify-email","css/auth/register"], () => (__webpack_require__("./resources/js/app.js")))
-/******/ 	__webpack_require__.O(undefined, ["css/auth/login","css/products/index","css/items/show","css/items/index","css/app","css/welcome","css/layouts/header","css/mypage/profile/edit","css/mypage/index","css/sell/create","css/purchase/address/edit","css/purchase/show","css/auth/verify-email","css/auth/register"], () => (__webpack_require__("./resources/css/app.scss")))
-/******/ 	__webpack_require__.O(undefined, ["css/auth/login","css/products/index","css/items/show","css/items/index","css/app","css/welcome","css/layouts/header","css/mypage/profile/edit","css/mypage/index","css/sell/create","css/purchase/address/edit","css/purchase/show","css/auth/verify-email","css/auth/register"], () => (__webpack_require__("./resources/css/items/index.scss")))
-/******/ 	__webpack_require__.O(undefined, ["css/auth/login","css/products/index","css/items/show","css/items/index","css/app","css/welcome","css/layouts/header","css/mypage/profile/edit","css/mypage/index","css/sell/create","css/purchase/address/edit","css/purchase/show","css/auth/verify-email","css/auth/register"], () => (__webpack_require__("./resources/css/items/show.scss")))
-/******/ 	__webpack_require__.O(undefined, ["css/auth/login","css/products/index","css/items/show","css/items/index","css/app","css/welcome","css/layouts/header","css/mypage/profile/edit","css/mypage/index","css/sell/create","css/purchase/address/edit","css/purchase/show","css/auth/verify-email","css/auth/register"], () => (__webpack_require__("./resources/css/products/index.scss")))
-/******/ 	__webpack_require__.O(undefined, ["css/auth/login","css/products/index","css/items/show","css/items/index","css/app","css/welcome","css/layouts/header","css/mypage/profile/edit","css/mypage/index","css/sell/create","css/purchase/address/edit","css/purchase/show","css/auth/verify-email","css/auth/register"], () => (__webpack_require__("./resources/css/auth/login.scss")))
-/******/ 	__webpack_require__.O(undefined, ["css/auth/login","css/products/index","css/items/show","css/items/index","css/app","css/welcome","css/layouts/header","css/mypage/profile/edit","css/mypage/index","css/sell/create","css/purchase/address/edit","css/purchase/show","css/auth/verify-email","css/auth/register"], () => (__webpack_require__("./resources/css/auth/register.scss")))
-/******/ 	__webpack_require__.O(undefined, ["css/auth/login","css/products/index","css/items/show","css/items/index","css/app","css/welcome","css/layouts/header","css/mypage/profile/edit","css/mypage/index","css/sell/create","css/purchase/address/edit","css/purchase/show","css/auth/verify-email","css/auth/register"], () => (__webpack_require__("./resources/css/auth/verify-email.scss")))
-/******/ 	__webpack_require__.O(undefined, ["css/auth/login","css/products/index","css/items/show","css/items/index","css/app","css/welcome","css/layouts/header","css/mypage/profile/edit","css/mypage/index","css/sell/create","css/purchase/address/edit","css/purchase/show","css/auth/verify-email","css/auth/register"], () => (__webpack_require__("./resources/css/purchase/show.scss")))
-/******/ 	__webpack_require__.O(undefined, ["css/auth/login","css/products/index","css/items/show","css/items/index","css/app","css/welcome","css/layouts/header","css/mypage/profile/edit","css/mypage/index","css/sell/create","css/purchase/address/edit","css/purchase/show","css/auth/verify-email","css/auth/register"], () => (__webpack_require__("./resources/css/purchase/address/edit.scss")))
-/******/ 	__webpack_require__.O(undefined, ["css/auth/login","css/products/index","css/items/show","css/items/index","css/app","css/welcome","css/layouts/header","css/mypage/profile/edit","css/mypage/index","css/sell/create","css/purchase/address/edit","css/purchase/show","css/auth/verify-email","css/auth/register"], () => (__webpack_require__("./resources/css/sell/create.scss")))
-/******/ 	__webpack_require__.O(undefined, ["css/auth/login","css/products/index","css/items/show","css/items/index","css/app","css/welcome","css/layouts/header","css/mypage/profile/edit","css/mypage/index","css/sell/create","css/purchase/address/edit","css/purchase/show","css/auth/verify-email","css/auth/register"], () => (__webpack_require__("./resources/css/mypage/index.scss")))
-/******/ 	__webpack_require__.O(undefined, ["css/auth/login","css/products/index","css/items/show","css/items/index","css/app","css/welcome","css/layouts/header","css/mypage/profile/edit","css/mypage/index","css/sell/create","css/purchase/address/edit","css/purchase/show","css/auth/verify-email","css/auth/register"], () => (__webpack_require__("./resources/css/mypage/profile/edit.scss")))
-/******/ 	__webpack_require__.O(undefined, ["css/auth/login","css/products/index","css/items/show","css/items/index","css/app","css/welcome","css/layouts/header","css/mypage/profile/edit","css/mypage/index","css/sell/create","css/purchase/address/edit","css/purchase/show","css/auth/verify-email","css/auth/register"], () => (__webpack_require__("./resources/css/layouts/header.scss")))
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/auth/login","css/products/index","css/items/show","css/items/index","css/app","css/welcome","css/layouts/header","css/mypage/profile/edit","css/mypage/index","css/sell/create","css/purchase/address/edit","css/purchase/show","css/auth/verify-email","css/auth/register"], () => (__webpack_require__("./resources/css/welcome.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/auth/register","css/auth/login","css/items/show","css/items/index","css/app","css/welcome","css/layouts/header","css/mypage/profile/edit","css/mypage/index","css/sell/create","css/purchase/address/edit","css/purchase/show","css/auth/verify-email"], () => (__webpack_require__("./resources/js/app.js")))
+/******/ 	__webpack_require__.O(undefined, ["css/auth/register","css/auth/login","css/items/show","css/items/index","css/app","css/welcome","css/layouts/header","css/mypage/profile/edit","css/mypage/index","css/sell/create","css/purchase/address/edit","css/purchase/show","css/auth/verify-email"], () => (__webpack_require__("./resources/css/app.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/auth/register","css/auth/login","css/items/show","css/items/index","css/app","css/welcome","css/layouts/header","css/mypage/profile/edit","css/mypage/index","css/sell/create","css/purchase/address/edit","css/purchase/show","css/auth/verify-email"], () => (__webpack_require__("./resources/css/items/index.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/auth/register","css/auth/login","css/items/show","css/items/index","css/app","css/welcome","css/layouts/header","css/mypage/profile/edit","css/mypage/index","css/sell/create","css/purchase/address/edit","css/purchase/show","css/auth/verify-email"], () => (__webpack_require__("./resources/css/items/show.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/auth/register","css/auth/login","css/items/show","css/items/index","css/app","css/welcome","css/layouts/header","css/mypage/profile/edit","css/mypage/index","css/sell/create","css/purchase/address/edit","css/purchase/show","css/auth/verify-email"], () => (__webpack_require__("./resources/css/auth/login.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/auth/register","css/auth/login","css/items/show","css/items/index","css/app","css/welcome","css/layouts/header","css/mypage/profile/edit","css/mypage/index","css/sell/create","css/purchase/address/edit","css/purchase/show","css/auth/verify-email"], () => (__webpack_require__("./resources/css/auth/register.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/auth/register","css/auth/login","css/items/show","css/items/index","css/app","css/welcome","css/layouts/header","css/mypage/profile/edit","css/mypage/index","css/sell/create","css/purchase/address/edit","css/purchase/show","css/auth/verify-email"], () => (__webpack_require__("./resources/css/auth/verify-email.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/auth/register","css/auth/login","css/items/show","css/items/index","css/app","css/welcome","css/layouts/header","css/mypage/profile/edit","css/mypage/index","css/sell/create","css/purchase/address/edit","css/purchase/show","css/auth/verify-email"], () => (__webpack_require__("./resources/css/purchase/show.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/auth/register","css/auth/login","css/items/show","css/items/index","css/app","css/welcome","css/layouts/header","css/mypage/profile/edit","css/mypage/index","css/sell/create","css/purchase/address/edit","css/purchase/show","css/auth/verify-email"], () => (__webpack_require__("./resources/css/purchase/address/edit.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/auth/register","css/auth/login","css/items/show","css/items/index","css/app","css/welcome","css/layouts/header","css/mypage/profile/edit","css/mypage/index","css/sell/create","css/purchase/address/edit","css/purchase/show","css/auth/verify-email"], () => (__webpack_require__("./resources/css/sell/create.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/auth/register","css/auth/login","css/items/show","css/items/index","css/app","css/welcome","css/layouts/header","css/mypage/profile/edit","css/mypage/index","css/sell/create","css/purchase/address/edit","css/purchase/show","css/auth/verify-email"], () => (__webpack_require__("./resources/css/mypage/index.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/auth/register","css/auth/login","css/items/show","css/items/index","css/app","css/welcome","css/layouts/header","css/mypage/profile/edit","css/mypage/index","css/sell/create","css/purchase/address/edit","css/purchase/show","css/auth/verify-email"], () => (__webpack_require__("./resources/css/mypage/profile/edit.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/auth/register","css/auth/login","css/items/show","css/items/index","css/app","css/welcome","css/layouts/header","css/mypage/profile/edit","css/mypage/index","css/sell/create","css/purchase/address/edit","css/purchase/show","css/auth/verify-email"], () => (__webpack_require__("./resources/css/layouts/header.scss")))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/auth/register","css/auth/login","css/items/show","css/items/index","css/app","css/welcome","css/layouts/header","css/mypage/profile/edit","css/mypage/index","css/sell/create","css/purchase/address/edit","css/purchase/show","css/auth/verify-email"], () => (__webpack_require__("./resources/css/welcome.scss")))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()

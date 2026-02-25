@@ -9,13 +9,13 @@
 ```bash
 git clone <リポジトリのURL>
 cd hurima-app
-docker-compose up -d --build
+docker compose up -d --build
 ```
 
 ### Laravel環境構築
 
 ```bash
-docker-compose exec php bash
+docker compose exec php bash
 cd /var/www
 composer install
 cp .env.example .env
@@ -39,6 +39,30 @@ php artisan db:seed
 npm install
 npm run dev
 exit
+```
+
+## テスト実行
+
+### 準備（初回のみ）
+
+```bash
+docker compose exec php bash
+cd /var/www
+cp .env.testing.example .env.testing
+exit
+```
+
+`.env.testing` の `APP_KEY` を `.env` の `APP_KEY` で上書きしてください。
+
+```bash
+# 初回のみ: laravel_test を作成
+docker compose exec mysql mysql -u root -proot -e "CREATE DATABASE laravel_test"
+```
+
+### テスト実行
+
+```bash
+docker compose exec php php artisan test
 ```
 
 ## 開発環境

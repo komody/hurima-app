@@ -54,7 +54,8 @@ class LoginTest extends TestCase
 
     public function test_login_succeeds_with_correct_credentials(): void
     {
-        $user = User::factory()->create([
+        $user = User::create([
+            'name' => 'テストユーザー',
             'email' => 'test@example.com',
             'password' => Hash::make('password123'),
             'email_verified_at' => now(),

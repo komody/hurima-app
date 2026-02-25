@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\User;
 use App\Notifications\VerifyEmail;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\URL;
 use Tests\TestCase;
@@ -33,7 +34,13 @@ class EmailVerificationTest extends TestCase
 
     public function test_verification_notice_page_has_link_to_mail_site(): void
     {
-        $user = User::factory()->unverified()->create();
+        $user = User::create([
+            'name' => 'テストユーザー',
+            'email' => 'unverified1@example.com',
+            'password' => Hash::make('password'),
+            'email_verified_at' => null,
+            'first_login_email_verified_at' => null,
+        ]);
 
         $response = $this->actingAs($user)->get(route('verification.notice'));
 
@@ -44,7 +51,13 @@ class EmailVerificationTest extends TestCase
 
     public function test_verification_redirects_to_profile_edit_when_completed(): void
     {
-        $user = User::factory()->unverified()->create();
+        $user = User::create([
+            'name' => 'テストユーザー',
+            'email' => 'unverified2@example.com',
+            'password' => Hash::make('password'),
+            'email_verified_at' => null,
+            'first_login_email_verified_at' => null,
+        ]);
 
         $verificationUrl = URL::temporarySignedRoute(
             'verification.verify',

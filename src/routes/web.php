@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PurchaseController;
@@ -54,9 +53,6 @@ Route::post('/item/{item_id}/comment', [CommentController::class, 'store'])
 Route::post('/item/{item_id}/like', [LikeController::class, 'toggle'])
   ->middleware('auth')
   ->name('items.like.toggle');
-
-// 商品一覧ページ（既存のルート）
-Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 
 // メール認証誘導画面
 Route::get('/email/verify', function () {

@@ -210,12 +210,12 @@
 }
 
 .custom-dropdown-option:hover {
-  background: #5599EB;
+  background: #5599eb;
   border-radius: 5px;
 }
 
 .custom-dropdown-option.selected {
-  background: #5599EB;
+  background: #5599eb;
   color: #fff;
   border-radius: 5px;
 }

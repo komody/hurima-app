@@ -5,16 +5,18 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AddressRequest;
 use App\Http\Requests\PurchaseRequest;
 use App\Models\Item;
-use App\Models\Order;
+use App\Services\PurchaseService;
+use App\Services\StripeCheckoutService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Stripe\Stripe;
-use Stripe\Checkout\Session;
 use Stripe\Exception\ApiErrorException;
 
 class PurchaseController extends Controller
 {
+    public function __construct(
+        private PurchaseService $purchaseService,
+        private StripeCheckoutService $stripeCheckoutService
+    ) {}
+
     /**
      * 商品購入画面を表示
      */
@@ -22,24 +24,12 @@ class PurchaseController extends Controller
     {
         $item = Item::findOrFail($item_id);
 
-        if ($item->sold_out) {
-            return redirect()
-                ->route('items.show', ['item_id' => $item_id])
-                ->with('error', 'この商品は売り切れです。');
+        $redirect = $this->purchaseService->validatePurchaseable($item, $item_id);
+        if ($redirect) {
+            return $redirect;
         }
 
-        if ($item->seller_id === Auth::id()) {
-            return redirect()
-                ->route('items.show', ['item_id' => $item_id])
-                ->with('error', '自分の商品は購入できません。');
-        }
-
-        $account = Auth::user()->account;
-        $deliveryAddress = session('purchase_delivery') ?? [
-            'postal_code' => $account?->postal_code ?? '',
-            'address' => $account?->address ?? '',
-            'building' => $account?->building ?? '',
-        ];
+        $deliveryAddress = $this->purchaseService->getDeliveryAddress();
         $paymentMethod = session('purchase_payment_method', '');
 
         return view('purchase.show', compact('item', 'deliveryAddress', 'paymentMethod'));
@@ -51,17 +41,14 @@ class PurchaseController extends Controller
     public function editAddress($item_id)
     {
         $item = Item::findOrFail($item_id);
-        if ($item->sold_out) {
-            return redirect()
-                ->route('items.show', ['item_id' => $item_id])
-                ->with('error', 'この商品は売り切れです。');
+
+        $redirect = $this->purchaseService->validatePurchaseable($item, $item_id);
+        if ($redirect) {
+            return $redirect;
         }
-        $account = Auth::user()->account;
-        $deliveryAddress = session('purchase_delivery') ?? [
-            'postal_code' => old('postal_code', $account?->postal_code ?? ''),
-            'address' => old('address', $account?->address ?? ''),
-            'building' => old('building', $account?->building ?? ''),
-        ];
+
+        $deliveryAddress = $this->purchaseService->getDeliveryAddressForEdit();
+
         return view('purchase.address.edit', compact('item_id', 'deliveryAddress'));
     }
 
@@ -78,6 +65,7 @@ class PurchaseController extends Controller
                 'building' => $validated['building'] ?? '',
             ],
         ]);
+
         return redirect()
             ->route('purchase.show', ['item_id' => $item_id])
             ->with('message', '配送先を更新しました。');
@@ -90,42 +78,15 @@ class PurchaseController extends Controller
     {
         $item = Item::findOrFail($item_id);
 
-        if ($item->sold_out) {
-            return redirect()
-                ->route('items.show', ['item_id' => $item_id])
-                ->with('error', 'この商品は売り切れです。');
+        $redirect = $this->purchaseService->validatePurchaseable($item, $item_id);
+        if ($redirect) {
+            return $redirect;
         }
 
-        if ($item->seller_id === Auth::id()) {
-            return redirect()
-                ->route('items.show', ['item_id' => $item_id])
-                ->with('error', '自分の商品は購入できません。');
-        }
-
-        $account = Auth::user()->account;
-        $delivery = session('purchase_delivery') ?? [
-            'postal_code' => $account?->postal_code ?? '',
-            'address' => $account?->address ?? '',
-            'building' => $account?->building ?? '',
-        ];
+        $delivery = $this->purchaseService->getDeliveryAddress();
         $paymentMethod = $request->validated()['payment_method'];
 
-        DB::transaction(function () use ($item, $delivery, $paymentMethod) {
-            $item->update([
-                'buyer_id' => Auth::id(),
-                'sold_out' => true,
-            ]);
-
-            Order::create([
-                'user_id' => Auth::id(),
-                'item_id' => $item->id,
-                'payment_method' => $paymentMethod,
-                'delivery_postal_code' => $delivery['postal_code'] ?? '',
-                'delivery_address' => $delivery['address'] ?? '',
-                'delivery_building' => $delivery['building'] ?? '',
-            ]);
-        });
-
+        $this->purchaseService->completePurchase($item, $delivery, $paymentMethod);
         session()->forget(['purchase_delivery', 'purchase_payment_method']);
 
         return redirect()
@@ -140,52 +101,19 @@ class PurchaseController extends Controller
     {
         $item = Item::findOrFail($item_id);
 
-        if ($item->sold_out) {
-            return response()->json(['error' => 'この商品は売り切れです。'], 400);
-        }
-        if ($item->seller_id === Auth::id()) {
-            return response()->json(['error' => '自分の商品は購入できません。'], 400);
+        $response = $this->purchaseService->validatePurchaseableForApi($item, $item_id);
+        if ($response) {
+            return $response;
         }
 
-        Stripe::setApiKey(config('services.stripe.secret'));
-
-        $account = Auth::user()->account;
-        $delivery = session('purchase_delivery') ?? [
-            'postal_code' => $account?->postal_code ?? '',
-            'address' => $account?->address ?? '',
-            'building' => $account?->building ?? '',
-        ];
-
-        $successUrl = url("/purchase/{$item_id}/success") . '?session_id={CHECKOUT_SESSION_ID}';
-        $cancelUrl = route('purchase.show', ['item_id' => $item_id]);
+        $delivery = $this->purchaseService->getDeliveryAddress();
 
         try {
-            $session = Session::create([
-                'mode' => 'payment',
-                'payment_method_types' => ['card'],
-                'line_items' => [[
-                    'price_data' => [
-                        'currency' => 'jpy',
-                        'product_data' => [
-                            'name' => $item->name,
-                            'images' => $item->image_url ? [url($item->image_url)] : [],
-                        ],
-                        'unit_amount' => $item->price,
-                    ],
-                    'quantity' => 1,
-                ]],
-                'success_url' => $successUrl,
-                'cancel_url' => $cancelUrl,
-                'metadata' => [
-                    'item_id' => (string) $item->id,
-                    'user_id' => (string) Auth::id(),
-                    'payment_method' => 'カード支払い',
-                    'delivery_postal_code' => $delivery['postal_code'] ?? '',
-                    'delivery_address' => $delivery['address'] ?? '',
-                    'delivery_building' => $delivery['building'] ?? '',
-                ],
-                'locale' => 'ja',
-            ]);
+            $session = $this->stripeCheckoutService->createSession(
+                $item,
+                (int) $item_id,
+                $delivery
+            );
 
             return response()->json(['url' => $session->url]);
         } catch (ApiErrorException $e) {
@@ -207,45 +135,15 @@ class PurchaseController extends Controller
 
         $item = Item::findOrFail($item_id);
 
-        Stripe::setApiKey(config('services.stripe.secret'));
-
         try {
-            $session = Session::retrieve($sessionId);
+            $session = $this->stripeCheckoutService->retrieveSession($sessionId);
 
-            if ($session->payment_status !== 'paid') {
-                return redirect()
-                    ->route('purchase.show', ['item_id' => $item_id])
-                    ->with('error', '決済が完了していません。');
+            $redirect = $this->stripeCheckoutService->validateSession($session, $item, $item_id);
+            if ($redirect) {
+                return $redirect;
             }
 
-            if ((string) $session->metadata->item_id !== (string) $item->id) {
-                return redirect()
-                    ->route('items.index')
-                    ->with('error', '不正なリクエストです。');
-            }
-
-            if ((string) $session->metadata->user_id !== (string) Auth::id()) {
-                return redirect()
-                    ->route('items.index')
-                    ->with('error', '不正なリクエストです。');
-            }
-
-            DB::transaction(function () use ($item, $session) {
-                $item->update([
-                    'buyer_id' => Auth::id(),
-                    'sold_out' => true,
-                ]);
-
-                Order::create([
-                    'user_id' => (int) $session->metadata->user_id,
-                    'item_id' => (int) $session->metadata->item_id,
-                    'payment_method' => $session->metadata->payment_method ?? 'カード支払い',
-                    'delivery_postal_code' => $session->metadata->delivery_postal_code ?? '',
-                    'delivery_address' => $session->metadata->delivery_address ?? '',
-                    'delivery_building' => $session->metadata->delivery_building ?? '',
-                ]);
-            });
-
+            $this->stripeCheckoutService->completePurchaseFromSession($item, $session);
             session()->forget(['purchase_delivery', 'purchase_payment_method']);
 
             return redirect()

@@ -65,7 +65,7 @@ document.getElementById('buy-btn').addEventListener('click', /*#__PURE__*/_async
           headers: {
             'Content-Type': 'application/json',
             'X-CSRF-TOKEN': csrfToken,
-            'Accept': 'application/json'
+            Accept: 'application/json'
           }
         });
       case 4:

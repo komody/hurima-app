@@ -47,7 +47,7 @@
                         <p id="payment_method_client_error" class="purchase-show-payment-error" style="display: none;"></p>
                         <select id="payment_method" name="payment_method" class="purchase-show-select @error('payment_method') purchase-show-select-error @enderror">
                             <option value="">選択してください</option>
-                            <option value="コンビニ払い" {{ $paymentMethod === 'コンビニ払い' ? 'selected' : '' }}>コンビニ払い</option>
+                            <option value="コンビニ支払い" {{ $paymentMethod === 'コンビニ支払い' ? 'selected' : '' }}>コンビニ支払い</option>
                             <option value="カード支払い" {{ $paymentMethod === 'カード支払い' ? 'selected' : '' }}>カード支払い</option>
                         </select>
                     </div>

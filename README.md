@@ -17,6 +17,7 @@ docker compose exec php bash
 cd /var/www
 composer install
 cp .env.example .env
+exit
 ```
 
 `.env` の環境変数を以下のように設定してください。
@@ -28,6 +29,7 @@ DB_USERNAME=laravel_user
 DB_PASSWORD=laravel_pass
 MAIL_HOST=mailhog
 MAIL_PORT=1025
+MAIL_FROM_ADDRESS=noreply@example.com
 ```
 
 `Stripe ダッシュボード` の テストモード で取得した STRIPE_KEY と STRIPE_SECRET を .env に設定してください
@@ -37,14 +39,46 @@ STRIPE_KEY=（Stripeダッシュボードで取得した公開可能キー）
 STRIPE_SECRET=（Stripeダッシュボードで取得したシークレットキー）
 ```
 
+### アプリケーションキーの生成
+
 ```bash
-php artisan key:generate
-php artisan storage:link
-php artisan migrate
-php artisan db:seed
-npm install
-npm run dev
-exit
+docker compose exec php php artisan key:generate
+```
+
+### ストレージリンクの作成
+
+```bash
+docker compose exec php php artisan storage:link
+```
+
+### データベースの作成
+
+```bash
+docker compose exec mysql mysql -u root -proot -e "CREATE DATABASE laravel_db;"
+```
+
+### データベースマイグレーションの実行
+
+```bash
+docker compose exec php php artisan migrate
+```
+
+### データベースシーディングの実行
+
+```bash
+docker compose exec php php artisan db:seed
+```
+
+### フロントエンド依存関係のインストール
+
+```bash
+docker compose exec php npm install
+```
+
+### フロントエンドのビルド
+
+```bash
+docker compose exec php npm run dev
 ```
 
 ## テスト実行

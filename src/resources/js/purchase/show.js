@@ -27,7 +27,7 @@ document.getElementById('buy-btn').addEventListener('click', async function () {
     return;
   }
 
-  if (paymentMethod === 'コンビニ払い') {
+  if (paymentMethod === 'コンビニ支払い') {
     const btn = this;
     btn.disabled = true;
     btn.textContent = '処理中...';

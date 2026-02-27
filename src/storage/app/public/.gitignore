@@ -1,2 +1,6 @@
 *
 !.gitignore
+!layouts/
+!layouts/**
+!items/
+!items/dummy*.jpg

@@ -1,13 +1,11 @@
-# Hurima
-
-フリマアプリケーション
+# フリマアプリ
 
 ## 環境構築
 
 ### Dockerビルド
 
 ```bash
-git clone <リポジトリのURL>
+git clone https://github.com/komody/hurima-app
 cd hurima-app
 docker compose up -d --build
 ```
@@ -32,8 +30,16 @@ MAIL_HOST=mailhog
 MAIL_PORT=1025
 ```
 
+`Stripe ダッシュボード` の テストモード で取得した STRIPE_KEY と STRIPE_SECRET を .env に設定してください
+
+```
+STRIPE_KEY=（Stripeダッシュボードで取得した公開可能キー）
+STRIPE_SECRET=（Stripeダッシュボードで取得したシークレットキー）
+```
+
 ```bash
 php artisan key:generate
+php artisan storage:link
 php artisan migrate
 php artisan db:seed
 npm install
@@ -87,8 +93,12 @@ docker compose exec php php artisan test
 
 ## ER図
 
-![ER図](docs/er-diagram.png)
+![ER図](./er-diagram.png)
 
 ## URL
 
 - 開発環境: http://localhost/
+- 会員登録: http://localhost/register
+- ログイン: http://localhost/login
+- phpMyAdmin: http://localhost:8080/
+- MailHog（メール確認）: http://localhost:8025/

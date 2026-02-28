@@ -33,7 +33,7 @@
                 @forelse($items as $item)
                 @if($item->sold_out)
                 <div class="items-index-product-card items-index-product-card-sold">
-                    <div class="items-index-product-image items-index-product-image--sold">
+                    <div class="items-index-product-image items-index-product-image-sold">
                         <img src="{{ $item->image_url }}"
                             alt="{{ $item->name }}"
                             onerror="this.src='{{ $noImageUrl }}'">

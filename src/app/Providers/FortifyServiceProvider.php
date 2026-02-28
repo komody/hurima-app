@@ -24,17 +24,24 @@ class FortifyServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
+        $this->configureFortify();
+        $this->configureRegisterResponse();
+        $this->configureRateLimiters();
+        $this->configureLoginResponse();
+        $this->configureAuthenticateUsing();
+    }
+
+    private function configureFortify(): void
+    {
         Fortify::createUsersUsing(CreateNewUser::class);
         Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
+        Fortify::registerView(fn () => view('auth.register'));
+    }
 
-        // 登録後のリダイレクト先を設定
-        Fortify::registerView(function () {
-            return view('auth.register');
-        });
-
-        // 登録成功後のリダイレクト
+    private function configureRegisterResponse(): void
+    {
         $this->app->singleton(\Laravel\Fortify\Contracts\RegisterResponse::class, function () {
             return new class implements \Laravel\Fortify\Contracts\RegisterResponse {
                 public function toResponse($request)
@@ -43,7 +50,10 @@ class FortifyServiceProvider extends ServiceProvider
                 }
             };
         });
+    }
 
+    private function configureRateLimiters(): void
+    {
         RateLimiter::for('login', function (Request $request) {
             $throttleKey = Str::transliterate(Str::lower($request->input(Fortify::username())) . '|' . $request->ip());
 
@@ -53,7 +63,10 @@ class FortifyServiceProvider extends ServiceProvider
         RateLimiter::for('two-factor', function (Request $request) {
             return Limit::perMinute(5)->by($request->session()->get('login.id'));
         });
+    }
 
+    private function configureLoginResponse(): void
+    {
         $this->app->singleton(\Laravel\Fortify\Contracts\LoginResponse::class, function () {
             return new class implements \Laravel\Fortify\Contracts\LoginResponse {
                 public function toResponse($request)
@@ -67,7 +80,6 @@ class FortifyServiceProvider extends ServiceProvider
 
                     // 初回ログイン時のメール認証未完了の場合
                     if (is_null($user->first_login_email_verified_at)) {
-                        // 初回ログイン時のメール認証を送信（強制的に送信）
                         $user->notify(new VerifyEmail);
                         session()->put('first_login', true);
                         return redirect()->route('verification.notice');
@@ -80,8 +92,6 @@ class FortifyServiceProvider extends ServiceProvider
 
                     // 通常のログイン成功時
                     $intendedUrl = session()->get('url.intended');
-
-                    // コメント投稿またはいいねを試みていた場合は商品詳細へ
                     if ($intendedUrl && preg_match('#/item/(\d+)(?:/(?:comment|like))?#', $intendedUrl, $matches)) {
                         return redirect()->route('items.show', ['item_id' => $matches[1]]);
                     }
@@ -90,10 +100,11 @@ class FortifyServiceProvider extends ServiceProvider
                 }
             };
         });
+    }
 
-        // ログイン失敗時の処理
+    private function configureAuthenticateUsing(): void
+    {
         Fortify::authenticateUsing(function (Request $request) {
-            // LoginRequestを使ってバリデーション
             $loginRequest = new LoginRequest();
             $validator = \Illuminate\Support\Facades\Validator::make(
                 $request->all(),
@@ -102,18 +113,15 @@ class FortifyServiceProvider extends ServiceProvider
             );
 
             if ($validator->fails()) {
-                // バリデーションエラーをセッションに保存してリダイレクト
                 throw \Illuminate\Validation\ValidationException::withMessages($validator->errors()->toArray());
             }
 
-            // バリデーション通過後、認証処理
             $user = \App\Models\User::where('email', $request->email)->first();
 
             if ($user && \Illuminate\Support\Facades\Hash::check($request->password, $user->password)) {
                 return $user;
             }
 
-            // ログイン失敗時のエラーメッセージをセッションに保存
             session()->flash('errors', collect(['ログイン情報が登録されていません']));
             return null;
         });

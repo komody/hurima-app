@@ -42,7 +42,15 @@ class ItemDetailTest extends TestCase
             'sold_out' => false,
         ];
 
-        return Item::create(array_merge($base, array_diff_key($attributes, array_flip(['condition_id', 'seller_id']))));
+        $item = Item::create(array_merge($base, array_diff_key($attributes, array_flip(['condition_id', 'seller_id', 'category_ids']))));
+        $categoryIds = $attributes['category_ids'] ?? null;
+        if ($categoryIds !== null) {
+            $item->categories()->attach($categoryIds);
+        } else {
+            $category = Category::firstOrCreate(['name' => 'テストカテゴリ']);
+            $item->categories()->attach($category->id);
+        }
+        return $item;
     }
 
     /**
@@ -95,6 +103,7 @@ class ItemDetailTest extends TestCase
         $response->assertSee('1');
         $response->assertSee('商品説明文');
         $response->assertSee('良好');
+        $response->assertSee('テストカテゴリ');
         $response->assertSee('コメント太郎');
         $response->assertSee('いい商品ですね');
     }
@@ -107,8 +116,7 @@ class ItemDetailTest extends TestCase
         $category1 = Category::create(['name' => 'ファッション']);
         $category2 = Category::create(['name' => 'メンズ']);
 
-        $item = $this->createItem(['name' => '複数カテゴリ商品']);
-        $item->categories()->attach([$category1->id, $category2->id]);
+        $item = $this->createItem(['name' => '複数カテゴリ商品', 'category_ids' => [$category1->id, $category2->id]]);
 
         $response = $this->get(route('items.show', ['item_id' => $item->id]));
 

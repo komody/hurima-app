@@ -3,11 +3,13 @@
 namespace Tests\Feature;
 
 use App\Models\Account;
+use App\Models\Category;
 use App\Models\Condition;
 use App\Models\Item;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 /**
@@ -58,7 +60,15 @@ class UserInfoAcquisitionTest extends TestCase
             'sold_out' => false,
         ];
 
-        return Item::create(array_merge($base, array_diff_key($attributes, array_flip(['condition_id', 'seller_id']))));
+        $item = Item::create(array_merge($base, array_diff_key($attributes, array_flip(['condition_id', 'seller_id', 'category_ids']))));
+        $categoryIds = $attributes['category_ids'] ?? null;
+        if ($categoryIds !== null) {
+            $item->categories()->attach($categoryIds);
+        } else {
+            $category = Category::firstOrCreate(['name' => 'テストカテゴリ']);
+            $item->categories()->attach($category->id);
+        }
+        return $item;
     }
 
     /**
@@ -66,7 +76,11 @@ class UserInfoAcquisitionTest extends TestCase
      */
     public function test_required_user_info_is_displayed_on_profile_page(): void
     {
-        $user = $this->createVerifiedUser();
+        Storage::fake('public');
+        $profileImagePath = 'profile_images/test_profile.png';
+        Storage::disk('public')->put($profileImagePath, base64_decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=='));
+
+        $user = $this->createVerifiedUser(['profile_image' => $profileImagePath]);
         $soldItem = $this->createItem(['name' => '出品した商品', 'seller_id' => $user->id]);
         $purchasedItem = $this->createItem(['name' => '購入した商品']);
         $purchasedItem->update(['buyer_id' => $user->id, 'sold_out' => true]);
@@ -74,6 +88,7 @@ class UserInfoAcquisitionTest extends TestCase
         $response = $this->actingAs($user)->get(route('mypage.index'));
 
         $response->assertStatus(200);
+        $response->assertSee('profile_images/test_profile.png');
         $response->assertSee('テストユーザー');
         $response->assertSee('出品した商品');
         $response->assertSee('購入した商品');

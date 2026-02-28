@@ -76,7 +76,7 @@ class PurchaseService
     }
 
     /**
-     * 購入処理を実行（コンビニ払い用）
+     * 購入処理を実行（コンビニ支払い用）
      */
     public function completePurchase(Item $item, array $delivery, string $paymentMethod): void
     {

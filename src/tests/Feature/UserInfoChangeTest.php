@@ -6,6 +6,7 @@ use App\Models\Account;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 /**
@@ -39,11 +40,16 @@ class UserInfoChangeTest extends TestCase
      */
     public function test_initial_values_are_displayed_on_profile_edit_page(): void
     {
-        $user = $this->createVerifiedUser();
+        Storage::fake('public');
+        $profileImagePath = 'profile_images/test_profile_edit.png';
+        Storage::disk('public')->put($profileImagePath, base64_decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=='));
+
+        $user = $this->createVerifiedUser(['profile_image' => $profileImagePath]);
 
         $response = $this->actingAs($user)->get(route('mypage.profile.edit'));
 
         $response->assertStatus(200);
+        $response->assertSee('profile_images/test_profile_edit.png');
         $response->assertSee('初期ユーザー名');
         $response->assertSee('100-0001');
         $response->assertSee('東京都千代田区千代田1-1');

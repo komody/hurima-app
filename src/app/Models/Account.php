@@ -7,21 +7,21 @@ use Illuminate\Database\Eloquent\Model;
 
 class Account extends Model
 {
-  use HasFactory;
+    use HasFactory;
 
-  protected $table = 'accounts';
+    protected $table = 'accounts';
 
-  protected $fillable = [
-    'user_id',
-    'name',
-    'profile_image',
-    'postal_code',
-    'address',
-    'building',
-  ];
+    protected $fillable = [
+        'user_id',
+        'name',
+        'profile_image',
+        'postal_code',
+        'address',
+        'building',
+    ];
 
-  public function user()
-  {
-    return $this->belongsTo(User::class);
-  }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

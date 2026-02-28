@@ -94,8 +94,9 @@ exit
 
 `.env.testing` の `APP_KEY` を `.env` の `APP_KEY` で上書きしてください。
 
+### 初回のみ: laravel_test を作成
+
 ```bash
-# 初回のみ: laravel_test を作成
 docker compose exec mysql mysql -u root -proot -e "CREATE DATABASE laravel_test"
 ```
 

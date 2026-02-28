@@ -73,14 +73,14 @@ class PaymentMethodTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertSee('支払い方法');
-        $response->assertSee('コンビニ払い');
+        $response->assertSee('コンビニ支払い');
         $response->assertSee('カード支払い');
         $response->assertSee('選択してください');
 
-        $response = $this->actingAs($user)->withSession(['purchase_payment_method' => 'コンビニ払い'])
+        $response = $this->actingAs($user)->withSession(['purchase_payment_method' => 'コンビニ支払い'])
             ->get(route('purchase.show', ['item_id' => $item->id]));
 
         $response->assertStatus(200);
-        $response->assertSee('コンビニ払い', false);
+        $response->assertSee('コンビニ支払い', false);
     }
 }

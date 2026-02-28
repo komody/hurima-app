@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Account;
+use App\Models\Category;
 use App\Models\Condition;
 use App\Models\Item;
 use App\Models\User;
@@ -58,7 +59,15 @@ class ItemListAcquisitionTest extends TestCase
             'sold_out' => false,
         ];
 
-        return Item::create(array_merge($base, array_diff_key($attributes, array_flip(['condition_id', 'seller_id']))));
+        $item = Item::create(array_merge($base, array_diff_key($attributes, array_flip(['condition_id', 'seller_id', 'category_ids']))));
+        $categoryIds = $attributes['category_ids'] ?? null;
+        if ($categoryIds !== null) {
+            $item->categories()->attach($categoryIds);
+        } else {
+            $category = Category::firstOrCreate(['name' => 'テストカテゴリ']);
+            $item->categories()->attach($category->id);
+        }
+        return $item;
     }
 
     /**
@@ -120,7 +129,8 @@ class ItemListAcquisitionTest extends TestCase
             'first_login_email_verified_at' => now(),
         ]);
 
-        Item::create([
+        $category = Category::firstOrCreate(['name' => 'テストカテゴリ']);
+        $ownItem = Item::create([
             'name' => '自分の出品商品',
             'price' => 1000,
             'brand_name' => null,
@@ -131,7 +141,8 @@ class ItemListAcquisitionTest extends TestCase
             'buyer_id' => null,
             'sold_out' => false,
         ]);
-        Item::create([
+        $ownItem->categories()->attach($category->id);
+        $otherItem = Item::create([
             'name' => '他人の出品商品',
             'price' => 1000,
             'brand_name' => null,
@@ -142,6 +153,7 @@ class ItemListAcquisitionTest extends TestCase
             'buyer_id' => null,
             'sold_out' => false,
         ]);
+        $otherItem->categories()->attach($category->id);
 
         $response = $this->actingAs($user)->get(route('items.index'));
 

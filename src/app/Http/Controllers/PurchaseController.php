@@ -72,7 +72,7 @@ class PurchaseController extends Controller
     }
 
     /**
-     * コンビニ払い：Stripe を使わず購入を完了する
+     * コンビニ支払い：Stripe を使わず購入を完了する
      */
     public function completeConveniencePurchase(PurchaseRequest $request, $item_id)
     {

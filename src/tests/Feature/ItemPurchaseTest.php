@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Account;
+use App\Models\Category;
 use App\Models\Condition;
 use App\Models\Item;
 use App\Models\Order;
@@ -59,7 +60,15 @@ class ItemPurchaseTest extends TestCase
             'sold_out' => false,
         ];
 
-        return Item::create(array_merge($base, array_diff_key($attributes, array_flip(['condition_id', 'seller_id']))));
+        $item = Item::create(array_merge($base, array_diff_key($attributes, array_flip(['condition_id', 'seller_id', 'category_ids']))));
+        $categoryIds = $attributes['category_ids'] ?? null;
+        if ($categoryIds !== null) {
+            $item->categories()->attach($categoryIds);
+        } else {
+            $category = Category::firstOrCreate(['name' => 'テストカテゴリ']);
+            $item->categories()->attach($category->id);
+        }
+        return $item;
     }
 
     /**
@@ -71,7 +80,7 @@ class ItemPurchaseTest extends TestCase
         $item = $this->createItem(['name' => '購入テスト商品']);
 
         $response = $this->actingAs($user)->post(route('purchase.complete-convenience', ['item_id' => $item->id]), [
-            'payment_method' => 'コンビニ払い',
+            'payment_method' => 'コンビニ支払い',
         ]);
 
         $response->assertRedirect(route('items.index'));
@@ -93,7 +102,7 @@ class ItemPurchaseTest extends TestCase
         $item = $this->createItem(['name' => 'Sold表示テスト商品']);
 
         $this->actingAs($user)->post(route('purchase.complete-convenience', ['item_id' => $item->id]), [
-            'payment_method' => 'コンビニ払い',
+            'payment_method' => 'コンビニ支払い',
         ]);
 
         $response = $this->get(route('items.index'));
@@ -111,7 +120,7 @@ class ItemPurchaseTest extends TestCase
         $item = $this->createItem(['name' => 'マイページ購入テスト商品']);
 
         $this->actingAs($user)->post(route('purchase.complete-convenience', ['item_id' => $item->id]), [
-            'payment_method' => 'コンビニ払い',
+            'payment_method' => 'コンビニ支払い',
         ]);
 
         $response = $this->actingAs($user)->get(route('mypage.index', ['page' => 'buy']));

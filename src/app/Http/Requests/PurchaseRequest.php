@@ -15,9 +15,9 @@ class PurchaseRequest extends FormRequest
     {
         $rules = [];
 
-        // 購入完了（コンビニ払い）のフォーム
+        // 購入完了（コンビニ支払い）のフォーム
         if ($this->routeIs('purchase.complete-convenience')) {
-            $rules['payment_method'] = 'required|in:コンビニ払い,カード支払い';
+            $rules['payment_method'] = 'required|in:コンビニ支払い,カード支払い';
         }
 
         return $rules;

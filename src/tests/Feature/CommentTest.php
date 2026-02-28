@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Account;
+use App\Models\Category;
 use App\Models\Condition;
 use App\Models\Item;
 use App\Models\User;
@@ -58,7 +59,15 @@ class CommentTest extends TestCase
             'sold_out' => false,
         ];
 
-        return Item::create(array_merge($base, array_diff_key($attributes, array_flip(['condition_id', 'seller_id']))));
+        $item = Item::create(array_merge($base, array_diff_key($attributes, array_flip(['condition_id', 'seller_id', 'category_ids']))));
+        $categoryIds = $attributes['category_ids'] ?? null;
+        if ($categoryIds !== null) {
+            $item->categories()->attach($categoryIds);
+        } else {
+            $category = Category::firstOrCreate(['name' => 'テストカテゴリ']);
+            $item->categories()->attach($category->id);
+        }
+        return $item;
     }
 
     /**

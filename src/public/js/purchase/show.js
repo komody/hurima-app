@@ -36,7 +36,7 @@ document.getElementById('buy-btn').addEventListener('click', /*#__PURE__*/_async
         selectEl.classList.add('purchase-show-select-error');
         return _context.a(2);
       case 1:
-        if (!(paymentMethod === 'コンビニ払い')) {
+        if (!(paymentMethod === 'コンビニ支払い')) {
           _context.n = 2;
           break;
         }

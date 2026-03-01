@@ -106,15 +106,13 @@ docker compose exec mysql mysql -u root -proot -e "CREATE DATABASE laravel_test"
 docker compose exec php php artisan test
 ```
 
-## 開発環境
+## テストユーザー（ログイン用）
 
-| 画面 | URL |
+| 項目 | 値 |
 |------|-----|
-| トップ（商品一覧） | http://localhost/ |
-| 会員登録 | http://localhost/register |
-| ログイン | http://localhost/login |
-| phpMyAdmin | http://localhost:8080/ |
-| MailHog（メール確認） | http://localhost:8025/ |
+| メールアドレス | test@example.com |
+| パスワード | password |
+| 名前 | テストユーザー |
 
 ## 使用技術(実行環境)
 
@@ -129,6 +127,115 @@ docker compose exec php php artisan test
 ## ER図
 
 ![ER図](./er-diagram.png)
+
+## テーブル構造（詳細）
+
+### users（ユーザー）
+
+| カラム | 型 | NULL | 説明 |
+|--------|------|------|------|
+| id | bigint | NO | 主キー |
+| name | string(255) | NO | 名前 |
+| email | string(255) | NO | メールアドレス（ユニーク） |
+| email_verified_at | timestamp | YES | メール認証日時 |
+| first_login_email_verified_at | timestamp | YES | 初回ログイン時のメール認証日時 |
+| password | string(255) | NO | パスワード |
+| created_at | timestamp | YES | 作成日時 |
+| updated_at | timestamp | YES | 更新日時 |
+
+### accounts（アカウント）
+
+| カラム | 型 | NULL | 説明 |
+|--------|------|------|------|
+| id | bigint | NO | 主キー |
+| user_id | bigint | NO | ユーザーID（外部キー → users.id） |
+| name | string(255) | NO | 名前 |
+| profile_image | string(255) | YES | プロフィール画像 |
+| postal_code | string(255) | YES | 郵便番号 |
+| address | string(255) | YES | 住所 |
+| building | string(255) | YES | 建物名 |
+| created_at | timestamp | YES | 作成日時 |
+| updated_at | timestamp | YES | 更新日時 |
+
+### items（商品）
+
+| カラム | 型 | NULL | 説明 |
+|--------|------|------|------|
+| id | bigint | NO | 主キー |
+| name | string(255) | NO | 商品名 |
+| image_url | string(255) | NO | 画像URL |
+| brand_name | string(255) | YES | ブランド名 |
+| price | integer | NO | 価格 |
+| description | text | NO | 説明 |
+| seller_id | bigint | NO | 出品者ID（外部キー → users.id） |
+| buyer_id | bigint | YES | 購入者ID（外部キー → users.id） |
+| condition_id | bigint | NO | 状態ID（外部キー → conditions.id） |
+| sold_out | boolean | NO | 売り切れフラグ（デフォルト: false） |
+| created_at | timestamp | YES | 作成日時 |
+| updated_at | timestamp | YES | 更新日時 |
+
+### conditions（商品状態マスタ）
+
+| カラム | 型 | NULL | 説明 |
+|--------|------|------|------|
+| id | bigint | NO | 主キー |
+| name | string(255) | NO | 状態名 |
+| created_at | timestamp | YES | 作成日時 |
+| updated_at | timestamp | YES | 更新日時 |
+
+### categories（カテゴリマスタ）
+
+| カラム | 型 | NULL | 説明 |
+|--------|------|------|------|
+| id | bigint | NO | 主キー |
+| name | string(255) | NO | カテゴリ名 |
+| created_at | timestamp | YES | 作成日時 |
+| updated_at | timestamp | YES | 更新日時 |
+
+### category_item（商品とカテゴリの中間テーブル）
+
+| カラム | 型 | NULL | 説明 |
+|--------|------|------|------|
+| id | bigint | NO | 主キー |
+| item_id | bigint | NO | 商品ID（外部キー → items.id） |
+| category_id | bigint | NO | カテゴリID（外部キー → categories.id） |
+| created_at | timestamp | YES | 作成日時 |
+| updated_at | timestamp | YES | 更新日時 |
+
+### likes（いいね）
+
+| カラム | 型 | NULL | 説明 |
+|--------|------|------|------|
+| id | bigint | NO | 主キー |
+| user_id | bigint | NO | ユーザーID（外部キー → users.id） |
+| item_id | bigint | NO | 商品ID（外部キー → items.id） |
+| created_at | timestamp | YES | 作成日時 |
+| updated_at | timestamp | YES | 更新日時 |
+
+### comments（コメント）
+
+| カラム | 型 | NULL | 説明 |
+|--------|------|------|------|
+| id | bigint | NO | 主キー |
+| user_id | bigint | NO | ユーザーID（外部キー → users.id） |
+| item_id | bigint | NO | 商品ID（外部キー → items.id） |
+| content | text | NO | コメント本文 |
+| created_at | timestamp | YES | 作成日時 |
+| updated_at | timestamp | YES | 更新日時 |
+
+### orders（注文）
+
+| カラム | 型 | NULL | 説明 |
+|--------|------|------|------|
+| id | bigint | NO | 主キー |
+| user_id | bigint | NO | ユーザーID（外部キー → users.id） |
+| item_id | bigint | NO | 商品ID（外部キー → items.id） |
+| payment_method | string(255) | NO | 支払い方法 |
+| delivery_postal_code | string(255) | NO | 配送先郵便番号 |
+| delivery_address | string(255) | NO | 配送先住所 |
+| delivery_building | string(255) | YES | 配送先建物名 |
+| created_at | timestamp | YES | 作成日時 |
+| updated_at | timestamp | YES | 更新日時 |
 
 ## URL
 
